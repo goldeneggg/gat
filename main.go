@@ -9,24 +9,17 @@ import (
 	"github.com/codegangsta/cli"
 )
 
-const (
-	VERSION = "0.1.0"
-)
-
 func main() {
 	handleSigint()
 }
 
 func handleSigint() {
-	// handler for return
 	var sts int
 	defer finalize(sts)
 
-	// channel as SIGINT handler
 	chSig := make(chan os.Signal)
 	signal.Notify(chSig, syscall.SIGINT)
 
-	// run app
 	chSts := make(chan int)
 	go run(chSts)
 
@@ -50,7 +43,6 @@ func run(chSts chan int) {
 	app.Flags = globalFlags
 	app.Commands = commands
 
-	//app.RunAndExitOnError()
 	if err := app.Run(os.Args); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		sts = 1

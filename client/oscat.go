@@ -73,21 +73,6 @@ func (c *oscat) catUsingExec(files map[string][]byte) (string, error) {
 	} else {
 		return "", fmt.Errorf("run error: %v", err)
 	}
-
-	/*
-			for f, in := range files {
-				L.Debug("Start cat", f, cmd.Process.Pid)
-				cmd.Stdout = &out
-				cmd.Stdin = bytes.NewReader(in)
-
-				if err := cmd.Run(); err == nil {
-					str += out.String()
-				} else {
-					return "", fmt.Errorf("run error: %v", err)
-				}
-			}
-		return str, nil
-	*/
 }
 
 //func (c *oscat) catUsingPipe(catInf *CatInfo) (string, error) {

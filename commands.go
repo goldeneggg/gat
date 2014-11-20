@@ -135,16 +135,6 @@ func exec(c *cli.Context) {
 	} else {
 		fmt.Fprintf(os.Stdout, "%s", res)
 	}
-
-	// XXX what should we do if interrupted by SIGINT
-	//	select {
-	//	case <-catInf.Done:
-	//		client.L.Debug("Done")
-	//		fmt.Fprintf(os.Stdout, "%s\n", catInf.MsgStdOut)
-	//	case err := <-catInf.Err:
-	//		client.L.Err(err)
-	//		fmt.Fprintf(os.Stderr, "%v\n", err)
-	//	}
 }
 
 func flags2map(c *cli.Context) map[string]interface{} {
