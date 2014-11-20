@@ -1,0 +1,10 @@
+{
+  "gist" : {
+    "Xapi-domain" : "https://factory-test.com",
+    "access-token" : "token",
+    "timeout" : 5
+  },
+  "slack" : {
+    "Xwebhook-url" : "https://webhook-url.com"
+  },
+}

@@ -1,0 +1,7 @@
+{
+  "gist" : {
+    "api-domain" : "https://aaaaaaaaaaaaaa.com",
+    "access-token" : "token2",
+    "timeout" : 5
+  }
+}

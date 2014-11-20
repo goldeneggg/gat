@@ -1,0 +1,14 @@
+{
+  "gist" : {
+    "api-domain" : "https://factory-test2.com",
+    "access-token" : "token2",
+    "Xtimeout" : 5
+  },
+  "slack" : {
+    "webhook-url" : "https://webhook-url2.com"
+  },
+  "os" : {
+    "Xn" : true,
+    "Xb" : true
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "gist" : {
+    "api-domain" : "https://factory-test.com",
+    "access-token" : "token",
+    "timeout" : 5,
+    "description" : "desc",
+    "public" : true
+  },
+  "slack" : {
+    "webhook-url" : "https://webhook-url.com",
+    "username" : "user",
+    "icon" : "icon",
+    "channel" : "channel",
+    "timeout" : 6,
+    "without-markdown" : true,
+    "without-unfurl" : true,
+    "linkfy" : true
+  },
+  "os" : {
+    "n" : true,
+    "b" : true
+  }
+}

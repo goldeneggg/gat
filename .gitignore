@@ -1,0 +1,8 @@
+.DS_Store
+*.swp
+*.log
+.profile
+Godeps/Readme
+Godeps/_workspace
+MEMO.md
+*.test
