@@ -73,6 +73,7 @@ func (g *gist) postGist(files map[string][]byte) (string, error) {
 		return "", err
 	}
 
+	//c := &http.Client{Timeout: gistTimeout * time.Second} // if timeout is constant variable, it does not need to convert time.Duration
 	c := &http.Client{Timeout: time.Duration(g.Timeout) * time.Second}
 	resp, err := c.Do(req)
 	if err != nil {
