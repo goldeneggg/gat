@@ -1,10 +1,13 @@
 GO ?= go
 GODEP ?= godep
+GOLINT ?= golint
 BINNAME := gat
 PGMPKGPATH := .
 TESTTARGET := ./...
+SAVETARGET := ./...
 PROFDIR := ./.profile
 PROFTARGET := ./client
+LINTTARGET := ./...
 
 all: depbuild
 
@@ -14,8 +17,14 @@ proftest:
 depbuild: depsave
 	$(GODEP) $(GO) build -o $(GOBIN)/$(BINNAME) $(PGMPKGPATH)
 
-deptest: depsave
-	$(GODEP) $(GO) test -v $(TESTTARGET)
+deptest: depvet
+	$(GODEP) $(GO) test -race -v $(TESTTARGET)
+
+depvet: depsave
+	$(GODEP) $(GO) vet -n $(TESTTARGET)
 
 depsave:
-	$(GODEP) save ./...
+	$(GODEP) save $(SAVETARGET)
+
+lint:
+	$(GOLINT) $(LINTTARGET)
