@@ -1,4 +1,4 @@
-gat [![Build Status](https://drone.io/github.com/goldeneggg/gat/status.png)](https://drone.io/github.com/goldeneggg/gat/latest) [![MIT License](http://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/goldeneggg/gat/blob/master/LICENSE)
+gat [![MIT License](http://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/goldeneggg/gat/blob/master/LICENSE)
 ==========
 __gat__ is utility tool of concatnating and printing file.
 
@@ -114,7 +114,25 @@ https://gist.github.com/cccccccccccccccccccc
 ### output command result to your gist using pipe. filename of this case is "stdin"
 $ sh huga.sh | gat gist
 https://gist.github.com/dddddddddddddddddddd
+
 ```
+
+*  If you'd like to post to Github Enterprise on your internal network, you should run with another config json for GHE specidied by `-c` global option.
+    * Edit config json for GHE (ex. `~/.gat/conf_ghe.json`)
+
+    ```json
+    {
+      "gist" : {
+        "api-domain" : "https://YOUR_GHE_DOMAIN/api/v3",
+        "access-token" : "YOUR_GITHUB_TOKEN_ON_GHE"
+      }
+    }
+    ```
+
+    ```
+    $ gat -c ~/.gat/conf_ghe.json gist -p -d "post to GHE" hoge.go
+    https://YOUR_GHE_DOMAIN/xxxxxxxxxxxxxxxxxxx
+    ```
 
 #### "slack"
 Output to slack
