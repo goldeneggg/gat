@@ -18,7 +18,7 @@ func handleSigint() {
 	defer finalize(sts)
 
 	chSig := make(chan os.Signal)
-	signal.Notify(chSig, syscall.SIGINT)
+	signal.Notify(chSig, os.Interrupt, syscall.SIGTERM)
 
 	chSts := make(chan int)
 	go run(chSts)
