@@ -126,10 +126,7 @@ func ExampleRunPlaygoHelp() {
 	//    playgo - Cat to play.golang.org
 	//
 	// USAGE:
-	//    command playgo [command options] [arguments...]
-	//
-	// OPTIONS:
-	//    --with-run	Share with Run
+	//    command playgo [arguments...]
 }
 
 // "list" Command
