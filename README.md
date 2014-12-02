@@ -1,10 +1,11 @@
 gat [![Build Status](http://drone.io/github.com/goldeneggg/gat/status.png)](https://drone.io/github.com/goldeneggg/gat/latest) [![GoDoc](https://godoc.org/github.com/goldeneggg/gat?status.png)](https://godoc.org/github.com/goldeneggg/gat) [![MIT License](http://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/goldeneggg/gat/blob/master/LICENSE)
 ==========
-__gat__ is utility tool of concatnating and printing file.
+__gat__ is utility tool of concatnating and printing file to various services.
 
 Target services
 * Gist
 * Slack
+* play.golang.org
 
 
 ## Getting Started
@@ -36,7 +37,7 @@ USAGE:
    OTHER_OUTPUT_COMMAND | gat [global options] command [command options]
 
 VERSION:
-   0.1.0
+   0.2.0
 
 AUTHOR:
   @goldeneggg - <jpshadowapps@gmail.com>
@@ -44,6 +45,7 @@ AUTHOR:
 COMMANDS:
    gist         Cat to gist
    slack        Cat to slack
+   playgo       Cat to play.golang.org
    os           Cat using os cat
    list         Show target service list
    help, h      Shows a list of commands or help for one command
@@ -91,7 +93,7 @@ OPTIONS:
     }
     ```
 
-* Result of `gat gist` command is __auto generated gist url__ (ex. `https://gist.github.com/goldeneggg/4727d6c712dc6f3528f3`)
+* Result of `gat gist` command is __auto generated gist URL (ex. `https://gist.github.com/goldeneggg/4727d6c712dc6f3528f3`)
 
 * examples
 
@@ -182,6 +184,36 @@ $ echo 'Foo <!everyone> bar http://test.com' | gat slack  # output format is "Fo
 
 * [Show more information of slack's message formatting](https://api.slack.com/docs/formatting)
 
+#### "playgo"
+Output to play.golang.org
+
+```bash
+NAME:
+   playgo - Cat to play.golang.org
+
+USAGE:
+  command playgo [arguments...]
+```
+
+* Edit `~/.gat/conf.json` (need only key, contents is empty)
+
+```json
+{
+  "playgo" : {}
+}
+```
+
+* Result of `gat playgo` command is shared URL
+* __Only one .go file is available as argument__
+    * Not .go file will be error.
+    * Multi files will be error.
+* example
+
+```bash
+$ gat playgo hoge.go
+https://play.golang.org/p/2mwrpQe7vq
+```
+
 
 ### Confirm supported service list
 
@@ -192,6 +224,7 @@ $ gat list
 
 gist  - Cat to gist
 slack  - Cat to slack
+playgo  - Cat to play.golang.org
 os  - Cat using os cat
 ```
 
