@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strings"
 )
 
 const (
@@ -13,9 +14,7 @@ const (
 	shareURLPrefix = "https://play.golang.org/p/"
 )
 
-type playgo struct {
-	WithRun bool `json:"with-run"`
-}
+type playgo struct{}
 
 func newPlaygo() *playgo {
 	return &playgo{}
@@ -42,9 +41,9 @@ func (p *playgo) CatP(catInf *CatInfo, chOut chan string, chErr chan error) {
 }
 
 func (p *playgo) postPlaygo(files map[string][]byte) (string, error) {
-	content := make([]byte, 0, 128)
-	for _, in := range files {
-		content = bytes.Join([][]byte{content, in}, []byte(""))
+	content, err := p.getContent(files)
+	if err != nil {
+		return "", err
 	}
 
 	req, err := p.getRequest(content)
@@ -70,6 +69,22 @@ func (p *playgo) postPlaygo(files map[string][]byte) (string, error) {
 	}
 
 	return shareURLPrefix + string(respBody), nil
+}
+
+func (p *playgo) getContent(files map[string][]byte) ([]byte, error) {
+	if len(files) > 1 {
+		return []byte{}, fmt.Errorf("Only 1 go file is available, but not 1: %d", len(files))
+	}
+
+	var content []byte
+	for f, in := range files {
+		if !strings.HasSuffix(f, ".go") {
+			return []byte{}, fmt.Errorf("file %s is not .go file", f)
+		}
+		content = in
+	}
+
+	return content, nil
 }
 
 func (p *playgo) getRequest(content []byte) (*http.Request, error) {
