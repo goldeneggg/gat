@@ -119,6 +119,19 @@ func ExampleRunSlackHelp() {
 	//    --linkfy, -l		Linkify channel names (starting with a '#') and usernames (starting with an '@')
 }
 
+func ExampleRunPlaygoHelp() {
+	app.Run([]string{"", "-c", testCommandsDir + "/test_conf_slack_e_domain.json", "playgo", "-h"})
+	// Output:
+	// NAME:
+	//    playgo - Cat to play.golang.org
+	//
+	// USAGE:
+	//    command playgo [command options] [arguments...]
+	//
+	// OPTIONS:
+	//    --with-run	Share with Run
+}
+
 // "list" Command
 func ExampleRunListCommand() {
 	app.Run([]string{"", "list"})
@@ -126,6 +139,7 @@ func ExampleRunListCommand() {
 	// Supported gat commands are:
 	//   gist  - Cat to gist
 	//   slack  - Cat to slack
+	//   playgo  - Cat to play.golang.org
 	//   os  - Cat using os cat
 }
 
@@ -135,6 +149,7 @@ func ExampleRunListCommandWithInput() {
 	// Supported gat commands are:
 	//   gist  - Cat to gist
 	//   slack  - Cat to slack
+	//   playgo  - Cat to play.golang.org
 	//   os  - Cat using os cat
 }
 

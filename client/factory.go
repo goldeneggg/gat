@@ -36,6 +36,8 @@ func NewClient(attr Attr) (Client, error) {
 		clnt = newGist()
 	case NAME_SLACK:
 		clnt = newSlack()
+	case NAME_PLAYGO:
+		clnt = newPlaygo()
 	default:
 		return clnt, fmt.Errorf("invalid service name: " + name)
 	}

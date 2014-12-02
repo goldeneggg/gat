@@ -78,6 +78,17 @@ var commands = []cli.Command{
 		Action: exec,
 	},
 	cli.Command{
+		Name:  client.NAME_PLAYGO,
+		Usage: "Cat to play.golang.org",
+		Flags: []cli.Flag{
+			cli.BoolFlag{
+				Name:  "with-run",
+				Usage: "Share with Run",
+			},
+		},
+		Action: exec,
+	},
+	cli.Command{
 		Name:  client.NAME_OSCAT,
 		Usage: "Cat using os cat",
 		Flags: []cli.Flag{
