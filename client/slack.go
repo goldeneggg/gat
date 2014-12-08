@@ -4,10 +4,10 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"net/http"
+
 	"regexp"
-	"time"
+
+	h "github.com/goldeneggg/gat/client/http"
 )
 
 const (
@@ -72,24 +72,11 @@ func (s *slack) postSlack(files map[string][]byte) (string, error) {
 	}
 	L.Debug("payload: ", string(pl))
 
-	req, err := s.getRequest(pl)
-	if err != nil {
-		return "", err
+	hr := &h.HttpReq{
+		Body: pl,
 	}
 
-	client := &http.Client{Timeout: time.Duration(s.Timeout) * time.Second}
-	resp, err := client.Do(req)
-	if err != nil {
-		return "", err
-	}
-
-	defer resp.Body.Close()
-
-	if resp.StatusCode != 200 {
-		return "", fmt.Errorf("invalid status: %d", resp.StatusCode)
-	}
-
-	respBody, err := ioutil.ReadAll(resp.Body)
+	respBody, err := hr.Post(s.WebhookUrl)
 	if err != nil {
 		return "", err
 	}
@@ -135,13 +122,4 @@ func (s *slack) getPayload(content []byte) ([]byte, error) {
 	} else {
 		return b, nil
 	}
-}
-
-func (s *slack) getRequest(payload []byte) (*http.Request, error) {
-	req, err := http.NewRequest("POST", s.WebhookUrl, bytes.NewReader(payload))
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
 }
