@@ -7,6 +7,7 @@ type CatInfo struct {
 }
 
 // NewCatInfo returns a new CatInfo given a map of files information
+// files argument should be structured by file name key and file content value
 func NewCatInfo(files map[string][]byte) *CatInfo {
 	return &CatInfo{
 		Files: files,
