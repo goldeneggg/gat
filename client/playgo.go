@@ -19,6 +19,8 @@ func newPlaygo() *playgo {
 	return &playgo{}
 }
 
+var _ Client = &playgo{}
+
 func (p *playgo) CheckConf() error {
 	return nil
 }
@@ -28,14 +30,6 @@ func (p *playgo) Cat(catInf *CatInfo) (string, error) {
 		return "", err
 	} else {
 		return res, nil
-	}
-}
-
-func (p *playgo) CatP(catInf *CatInfo, chOut chan string, chErr chan error) {
-	if res, err := p.Cat(catInf); err != nil {
-		chErr <- err
-	} else {
-		chOut <- res
 	}
 }
 

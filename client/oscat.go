@@ -20,6 +20,8 @@ func newOs() *oscat {
 	return &oscat{}
 }
 
+var _ Client = &oscat{}
+
 func (c *oscat) CheckConf() error {
 	return nil
 }
@@ -29,14 +31,6 @@ func (c *oscat) Cat(catInf *CatInfo) (string, error) {
 		return "", err
 	} else {
 		return out, nil
-	}
-}
-
-func (c *oscat) CatP(catInf *CatInfo, chOut chan string, chErr chan error) {
-	if out, err := c.Cat(catInf); err != nil {
-		chErr <- err
-	} else {
-		chOut <- out
 	}
 }
 

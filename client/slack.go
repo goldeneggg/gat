@@ -29,6 +29,8 @@ func newSlack() *slack {
 	return &slack{}
 }
 
+var _ Client = &slack{}
+
 func (s *slack) CheckConf() error {
 	if len(s.WebhookUrl) == 0 {
 		return fmt.Errorf("webhook-url is empty")
@@ -46,14 +48,6 @@ func (s *slack) Cat(catInf *CatInfo) (string, error) {
 		return "", err
 	} else {
 		return res, nil
-	}
-}
-
-func (s *slack) CatP(catInf *CatInfo, chOut chan string, chErr chan error) {
-	if res, err := s.Cat(catInf); err != nil {
-		chErr <- err
-	} else {
-		chOut <- res
 	}
 }
 

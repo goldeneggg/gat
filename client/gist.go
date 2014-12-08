@@ -25,6 +25,8 @@ func newGist() *gist {
 	return &gist{}
 }
 
+var _ Client = &gist{}
+
 func (g *gist) CheckConf() error {
 	if len(g.ApiDomain) == 0 {
 		return fmt.Errorf("api-domain is empty")
@@ -46,14 +48,6 @@ func (g *gist) Cat(catInf *CatInfo) (string, error) {
 		return "", err
 	} else {
 		return createdUrl, nil
-	}
-}
-
-func (g *gist) CatP(catInf *CatInfo, chOut chan string, chErr chan error) {
-	if createdUrl, err := g.Cat(catInf); err != nil {
-		chErr <- err
-	} else {
-		chOut <- createdUrl
 	}
 }
 
