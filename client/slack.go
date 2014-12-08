@@ -10,18 +10,20 @@ import (
 )
 
 const (
-	NAME_SLACK   = "slack"
+	// NameSlack represents a factory key for "slack"
+	NameSlack = "slack"
+
 	slackTimeout = 10
 )
 
 type slack struct {
-	WebhookUrl      string `json:"webhook-url"`
+	WebhookURL      string `json:"webhook-url"`
 	UserName        string `json:"username"`
 	Icon            string `json:"icon"`
 	Channel         string `json:"channel"`
 	Timeout         int    `json:"timeout"`
 	WithoutMarkdown bool   `json:"without-markdown"`
-	WithoutUnfUrl   bool   `json:"without-unfurl"`
+	WithoutUnfURL   bool   `json:"without-unfurl"`
 	Linkfy          bool   `json:"linkfy"`
 }
 
@@ -32,7 +34,7 @@ func newSlack() *slack {
 var _ Client = &slack{}
 
 func (s *slack) CheckConf() error {
-	if len(s.WebhookUrl) == 0 {
+	if len(s.WebhookURL) == 0 {
 		return fmt.Errorf("webhook-url is empty")
 	}
 
@@ -44,11 +46,12 @@ func (s *slack) CheckConf() error {
 }
 
 func (s *slack) Cat(catInf *CatInfo) (string, error) {
-	if res, err := s.postSlack(catInf.Files); err != nil {
+	res, err := s.postSlack(catInf.Files)
+	if err != nil {
 		return "", err
-	} else {
-		return res, nil
 	}
+
+	return res, nil
 }
 
 func (s *slack) postSlack(files map[string][]byte) (string, error) {
@@ -69,7 +72,7 @@ func (s *slack) postSlack(files map[string][]byte) (string, error) {
 		Body: pl,
 	}
 
-	respBody, err := hr.Post(s.WebhookUrl)
+	respBody, err := hr.Post(s.WebhookURL)
 	if err != nil {
 		return "", err
 	}
@@ -80,7 +83,7 @@ func (s *slack) postSlack(files map[string][]byte) (string, error) {
 type slackPayload struct {
 	Text        string `json:"text"`
 	UserName    string `json:"username,omitempty"`
-	IconUrl     string `json:"icon_url,omitempty"`
+	IconURL     string `json:"icon_url,omitempty"`
 	IconEmoji   string `json:"icon_emoji,omitempty"`
 	Channel     string `json:"channel,omitempty"`
 	Mrkdwn      bool   `json:"mrkdwn"`
@@ -94,7 +97,7 @@ func (s *slack) getPayload(content []byte) ([]byte, error) {
 		UserName:    s.UserName,
 		Channel:     s.Channel,
 		Mrkdwn:      !s.WithoutMarkdown,
-		UnfurlLinks: !s.WithoutUnfUrl,
+		UnfurlLinks: !s.WithoutUnfURL,
 	}
 
 	matched, err := regexp.MatchString(":[^:]+:", s.Icon)
@@ -103,16 +106,17 @@ func (s *slack) getPayload(content []byte) ([]byte, error) {
 	} else if matched {
 		pl.IconEmoji = s.Icon
 	} else {
-		pl.IconUrl = s.Icon
+		pl.IconURL = s.Icon
 	}
 
 	if s.Linkfy {
 		pl.LinkNames = 1
 	}
 
-	if b, err := json.Marshal(pl); err != nil {
+	b, err := json.Marshal(pl)
+	if err != nil {
 		return []byte{}, err
-	} else {
-		return b, nil
 	}
+
+	return b, nil
 }

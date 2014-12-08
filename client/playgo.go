@@ -8,7 +8,9 @@ import (
 )
 
 const (
-	NAME_PLAYGO    = "playgo"
+	// NamePlaygo represents a factory key for "playgo"
+	NamePlaygo = "playgo"
+
 	playgoURL      = "https://play.golang.org/share"
 	shareURLPrefix = "https://play.golang.org/p/"
 )
@@ -26,11 +28,12 @@ func (p *playgo) CheckConf() error {
 }
 
 func (p *playgo) Cat(catInf *CatInfo) (string, error) {
-	if res, err := p.postPlaygo(catInf.Files); err != nil {
+	res, err := p.postPlaygo(catInf.Files)
+	if err != nil {
 		return "", err
-	} else {
-		return res, nil
 	}
+
+	return res, nil
 }
 
 func (p *playgo) postPlaygo(files map[string][]byte) (string, error) {

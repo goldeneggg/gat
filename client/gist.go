@@ -9,12 +9,14 @@ import (
 )
 
 const (
-	NAME_GIST   = "gist"
+	// NameGist represents a factory key for "gist"
+	NameGist = "gist"
+
 	gistTimeout = 10
 )
 
 type gist struct {
-	ApiDomain   string `json:"api-domain"`
+	APIDomain   string `json:"api-domain"`
 	AccessToken string `json:"access-token"`
 	Timeout     int    `json:"timeout"`
 	Description string `json:"description"`
@@ -28,7 +30,7 @@ func newGist() *gist {
 var _ Client = &gist{}
 
 func (g *gist) CheckConf() error {
-	if len(g.ApiDomain) == 0 {
+	if len(g.APIDomain) == 0 {
 		return fmt.Errorf("api-domain is empty")
 	}
 
@@ -44,11 +46,12 @@ func (g *gist) CheckConf() error {
 }
 
 func (g *gist) Cat(catInf *CatInfo) (string, error) {
-	if createdUrl, err := g.postGist(catInf.Files); err != nil {
+	createdURL, err := g.postGist(catInf.Files)
+	if err != nil {
 		return "", err
-	} else {
-		return createdUrl, nil
 	}
+
+	return createdURL, nil
 }
 
 func (g *gist) postGist(files map[string][]byte) (string, error) {
@@ -65,7 +68,7 @@ func (g *gist) postGist(files map[string][]byte) (string, error) {
 		Headers: map[string]string{"Authorization": "token " + g.AccessToken},
 	}
 
-	respBody, err := hr.Post(g.ApiDomain + "/gists")
+	respBody, err := hr.Post(g.APIDomain + "/gists")
 	if err != nil {
 		return "", err
 	}
@@ -94,11 +97,12 @@ func (g *gist) getPayload(files map[string][]byte) ([]byte, error) {
 		Files:       plFiles,
 	}
 
-	if b, err := json.Marshal(pl); err != nil {
+	b, err := json.Marshal(pl)
+	if err != nil {
 		return []byte{}, err
-	} else {
-		return b, nil
 	}
+
+	return b, nil
 }
 
 func (g *gist) parseGistResp(respBody []byte) (string, error) {

@@ -12,7 +12,7 @@ import (
 
 var commands = []cli.Command{
 	cli.Command{
-		Name:  client.NAME_GIST,
+		Name:  client.NameGist,
 		Usage: "Cat to gist",
 		Flags: []cli.Flag{
 			cli.StringFlag{
@@ -39,7 +39,7 @@ var commands = []cli.Command{
 		Action: exec,
 	},
 	cli.Command{
-		Name:  client.NAME_SLACK,
+		Name:  client.NameSlack,
 		Usage: "Cat to slack",
 		Flags: []cli.Flag{
 			cli.StringFlag{
@@ -78,12 +78,12 @@ var commands = []cli.Command{
 		Action: exec,
 	},
 	cli.Command{
-		Name:   client.NAME_PLAYGO,
+		Name:   client.NamePlaygo,
 		Usage:  "Cat to play.golang.org",
 		Action: exec,
 	},
 	cli.Command{
-		Name:  client.NAME_OSCAT,
+		Name:  client.NameOscat,
 		Usage: "Cat using os cat",
 		Flags: []cli.Flag{
 			cli.BoolFlag{
@@ -178,18 +178,18 @@ func getInputFiles(c *cli.Context) ([]*os.File, error) {
 
 	if len(args) == 0 {
 		return []*os.File{os.Stdin}, nil
-	} else {
-		fs := make([]*os.File, 0)
-		for _, a := range args {
-			if f, err := os.Open(a); err == nil {
-				fs = append(fs, f)
-			} else {
-				return nil, err
-			}
-		}
-
-		return fs, nil
 	}
+
+	var fs []*os.File
+	for _, a := range args {
+		if f, err := os.Open(a); err == nil {
+			fs = append(fs, f)
+		} else {
+			return nil, err
+		}
+	}
+
+	return fs, nil
 }
 
 func readInput(file *os.File) ([]byte, error) {
@@ -228,20 +228,3 @@ func list(c *cli.Context) {
 		}
 	}
 }
-
-// XXX Beforeをラップする汎用関数のつもりで書いたが
-// この関数を介したCommandオブジェクトからActionを実行すると
-// 引数の Context に実行時情報が正しくセットされないため、PENDING
-//func wrapCommand(cmd cli.Command) cli.Command {
-//	wrapped := cmd
-//
-//	// "Before" should be overwritten
-//	wrapped.Before = func(c *cli.Context) error {
-//		fmt.Println("Before check args: ", c.Args())
-//		return nil
-//	}
-//	// "Flags" should be appended common flags
-//	wrapped.Flags = append(wrapped.Flags, commonFlags...)
-//
-//	return wrapped
-//}

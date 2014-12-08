@@ -26,45 +26,45 @@ type FactoryTest struct {
 var factoryTests = []FactoryTest{
 	FactoryTest{
 		attr: Attr{
-			Name:     NAME_OSCAT,
+			Name:     NameOscat,
 			ConfPath: ftConf,
 		},
 		exp: &oscat{Number: true, NumberNonBlank: true},
 	},
 	FactoryTest{
 		attr: Attr{
-			Name:     NAME_GIST,
+			Name:     NameGist,
 			ConfPath: ftConf,
 		},
-		exp: &gist{ApiDomain: "https://factory-test.com", AccessToken: "token", Timeout: 5, Description: "desc", Public: true},
+		exp: &gist{APIDomain: "https://factory-test.com", AccessToken: "token", Timeout: 5, Description: "desc", Public: true},
 	},
 	FactoryTest{
 		attr: Attr{
-			Name:     NAME_SLACK,
+			Name:     NameSlack,
 			ConfPath: ftConf,
 		},
-		exp: &slack{WebhookUrl: "https://webhook-url.com", UserName: "user", Icon: "icon", Channel: "channel", Timeout: 6, WithoutMarkdown: true, WithoutUnfUrl: true, Linkfy: true},
+		exp: &slack{WebhookURL: "https://webhook-url.com", UserName: "user", Icon: "icon", Channel: "channel", Timeout: 6, WithoutMarkdown: true, WithoutUnfURL: true, Linkfy: true},
 	},
 	FactoryTest{
 		attr: Attr{
-			Name:     NAME_OSCAT,
+			Name:     NameOscat,
 			ConfPath: ftConfTypoNonReq,
 		},
 		exp: &oscat{Number: false, NumberNonBlank: false},
 	},
 	FactoryTest{
 		attr: Attr{
-			Name:     NAME_GIST,
+			Name:     NameGist,
 			ConfPath: ftConfTypoNonReq,
 		},
-		exp: &gist{ApiDomain: "https://factory-test2.com", AccessToken: "token2", Timeout: 0, Description: "", Public: false},
+		exp: &gist{APIDomain: "https://factory-test2.com", AccessToken: "token2", Timeout: 0, Description: "", Public: false},
 	},
 	FactoryTest{
 		attr: Attr{
-			Name:     NAME_SLACK,
+			Name:     NameSlack,
 			ConfPath: ftConfTypoNonReq,
 		},
-		exp: &slack{WebhookUrl: "https://webhook-url2.com", UserName: "", Icon: "", Channel: "", Timeout: 0, WithoutMarkdown: false, WithoutUnfUrl: false, Linkfy: false},
+		exp: &slack{WebhookURL: "https://webhook-url2.com", UserName: "", Icon: "", Channel: "", Timeout: 0, WithoutMarkdown: false, WithoutUnfURL: false, Linkfy: false},
 	},
 }
 
@@ -102,63 +102,63 @@ var factoryErrTests = []FactoryTest{
 	// conf not found
 	FactoryTest{
 		attr: Attr{
-			Name:     NAME_GIST,
+			Name:     NameGist,
 			ConfPath: ftConf + ".notfound",
 		},
 	},
 	// conf is dir
 	FactoryTest{
 		attr: Attr{
-			Name:     NAME_GIST,
+			Name:     NameGist,
 			ConfPath: ftDir,
 		},
 	},
 	// empty file
 	FactoryTest{
 		attr: Attr{
-			Name:     NAME_GIST,
+			Name:     NameGist,
 			ConfPath: ftEmp,
 		},
 	},
 	// text file
 	FactoryTest{
 		attr: Attr{
-			Name:     NAME_GIST,
+			Name:     NameGist,
 			ConfPath: ftTxt,
 		},
 	},
 	// empty json
 	FactoryTest{
 		attr: Attr{
-			Name:     NAME_GIST,
+			Name:     NameGist,
 			ConfPath: ftConfEmp,
 		},
 	},
 	// empty content json
 	FactoryTest{
 		attr: Attr{
-			Name:     NAME_GIST,
+			Name:     NameGist,
 			ConfPath: ftConfEmpCtnt,
 		},
 	},
 	// format error json
 	FactoryTest{
 		attr: Attr{
-			Name:     NAME_GIST,
+			Name:     NameGist,
 			ConfPath: ftConfFmtErr,
 		},
 	},
 	// toomuch nest json
 	FactoryTest{
 		attr: Attr{
-			Name:     NAME_GIST,
+			Name:     NameGist,
 			ConfPath: ftConfTooNest,
 		},
 	},
 	// typo require key json
 	FactoryTest{
 		attr: Attr{
-			Name:     NAME_GIST,
+			Name:     NameGist,
 			ConfPath: ftConfTypoReq,
 		},
 	},
