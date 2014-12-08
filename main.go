@@ -37,7 +37,7 @@ func run(chSts chan int) {
 	app := cli.NewApp()
 	app.Name = "gat"
 	app.Version = VERSION
-	app.Usage = "Cat to anywhere"
+	app.Usage = "Utility tool of concatnating and printing file to various services"
 	app.Author = "@goldeneggg"
 	app.Email = "jpshadowapps@gmail.com"
 	app.Flags = globalFlags
