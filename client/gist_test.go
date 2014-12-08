@@ -7,13 +7,13 @@ type GistTest struct {
 	files      map[string][]byte
 	expPayload string
 	respBody   []byte
-	expUrl     string
+	expURL     string
 }
 
 var gTests = []GistTest{
 	GistTest{
 		g: &gist{
-			ApiDomain:   "domain1",
+			APIDomain:   "domain1",
 			AccessToken: "token1",
 			Timeout:     0,
 			Description: "",
@@ -24,11 +24,11 @@ var gTests = []GistTest{
 		},
 		expPayload: `{"files":{"test1.txt":{"content":"text content"}}}`,
 		respBody:   []byte(`{"html_url":"http://gist.github.com/goldeneggg/1"}`),
-		expUrl:     "http://gist.github.com/goldeneggg/1",
+		expURL:     "http://gist.github.com/goldeneggg/1",
 	},
 	GistTest{
 		g: &gist{
-			ApiDomain:   "domain2",
+			APIDomain:   "domain2",
 			AccessToken: "token2",
 			Timeout:     15,
 			Description: "desc",
@@ -39,11 +39,11 @@ var gTests = []GistTest{
 		},
 		expPayload: `{"description":"desc","files":{"test2.java":{"content":"java content"}}}`,
 		respBody:   []byte(`{"html_url":"http://gist.github.com/goldeneggg/2"}`),
-		expUrl:     "http://gist.github.com/goldeneggg/2",
+		expURL:     "http://gist.github.com/goldeneggg/2",
 	},
 	GistTest{
 		g: &gist{
-			ApiDomain:   "domain3",
+			APIDomain:   "domain3",
 			AccessToken: "token3",
 			Timeout:     -1,
 			Description: "",
@@ -55,11 +55,11 @@ var gTests = []GistTest{
 		},
 		expPayload: `{"public":true,"files":{"test31.rb":{"content":"ruby content 1"},"test32.rb":{"content":"ruby content 2"}}}`,
 		respBody:   []byte(`{"html_url":"http://gist.github.com/goldeneggg/3"}`),
-		expUrl:     "http://gist.github.com/goldeneggg/3",
+		expURL:     "http://gist.github.com/goldeneggg/3",
 	},
 	GistTest{
 		g: &gist{
-			ApiDomain:   "domain4",
+			APIDomain:   "domain4",
 			AccessToken: "token4",
 			Timeout:     30,
 			Description: "desc",
@@ -70,7 +70,7 @@ var gTests = []GistTest{
 		},
 		expPayload: `{"description":"desc","public":true,"files":{"stdin":{"content":"stdin content"}}}`,
 		respBody:   []byte(`{"html_url":"http://gist.github.com/goldeneggg/4"}`),
-		expUrl:     "http://gist.github.com/goldeneggg/4",
+		expURL:     "http://gist.github.com/goldeneggg/4",
 	},
 }
 
@@ -92,8 +92,8 @@ func TestGist(t *testing.T) {
 		if errU != nil {
 			t.Errorf("parseGistResp error: %#v", errU)
 		}
-		if u != te.expUrl {
-			t.Errorf("parseGistResp unexpected url: %s, expected: %s", u, te.expUrl)
+		if u != te.expURL {
+			t.Errorf("parseGistResp unexpected url: %s, expected: %s", u, te.expURL)
 		}
 	}
 }
@@ -101,7 +101,7 @@ func TestGist(t *testing.T) {
 var gErrTests = []GistTest{
 	GistTest{
 		g: &gist{
-			ApiDomain:   "",
+			APIDomain:   "",
 			AccessToken: "tokenE1",
 			Description: "",
 			Public:      false,
@@ -112,7 +112,7 @@ var gErrTests = []GistTest{
 	},
 	GistTest{
 		g: &gist{
-			ApiDomain:   "domainE2",
+			APIDomain:   "domainE2",
 			AccessToken: "",
 			Timeout:     300,
 			Description: "desc",
@@ -124,7 +124,7 @@ var gErrTests = []GistTest{
 	},
 	GistTest{
 		g: &gist{
-			ApiDomain:   "",
+			APIDomain:   "",
 			AccessToken: "",
 			Description: "",
 			Public:      true,
@@ -135,7 +135,7 @@ var gErrTests = []GistTest{
 	},
 	GistTest{
 		g: &gist{
-			ApiDomain:   "domainE4",
+			APIDomain:   "domainE4",
 			Description: "desc",
 			Public:      true,
 		},

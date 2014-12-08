@@ -7,8 +7,9 @@ import (
 )
 
 const (
-	NAME_OSCAT = "os"
-	STDIN      = "/dev/stdin"
+	// NameOscat represents a factory key for "oscat"
+	NameOscat = "os"
+	stdin     = "/dev/stdin"
 )
 
 type oscat struct {
@@ -20,24 +21,19 @@ func newOs() *oscat {
 	return &oscat{}
 }
 
+var _ Client = &oscat{}
+
 func (c *oscat) CheckConf() error {
 	return nil
 }
 
 func (c *oscat) Cat(catInf *CatInfo) (string, error) {
-	if out, err := c.catUsingExec(catInf.Files); err != nil {
+	out, err := c.catUsingExec(catInf.Files)
+	if err != nil {
 		return "", err
-	} else {
-		return out, nil
 	}
-}
 
-func (c *oscat) CatP(catInf *CatInfo, chOut chan string, chErr chan error) {
-	if out, err := c.Cat(catInf); err != nil {
-		chErr <- err
-	} else {
-		chOut <- out
-	}
+	return out, nil
 }
 
 func (c *oscat) catUsingExec(files map[string][]byte) (string, error) {
@@ -49,10 +45,10 @@ func (c *oscat) catUsingExec(files map[string][]byte) (string, error) {
 		opts = append(opts, "-b")
 	}
 
-	isStdin := false
-	for f, _ := range files {
-		if f == STDIN {
-			isStdin = true
+	isstdin := false
+	for f := range files {
+		if f == stdin {
+			isstdin = true
 		} else {
 			opts = append(opts, f)
 		}
@@ -62,17 +58,18 @@ func (c *oscat) catUsingExec(files map[string][]byte) (string, error) {
 
 	var out bytes.Buffer
 	cmd.Stdout = &out
-	if isStdin {
-		cmd.Stdin = bytes.NewReader(files[STDIN])
+	if isstdin {
+		cmd.Stdin = bytes.NewReader(files[stdin])
 	}
 
 	// XXX
 	// if input is multiple file, result is not sometimes sequential
-	if err := cmd.Run(); err == nil {
+	err := cmd.Run()
+	if err == nil {
 		return out.String(), err
-	} else {
-		return "", fmt.Errorf("run error: %v", err)
 	}
+
+	return "", fmt.Errorf("run error: %v", err)
 }
 
 //func (c *oscat) catUsingPipe(catInf *CatInfo) (string, error) {
@@ -87,7 +84,7 @@ func (c *oscat) catUsingExec(files map[string][]byte) (string, error) {
 //	cmd := exec.Command("cat", opts...)
 //
 //	// 入力へのパイプを取得
-//	pipeIn, errIn := cmd.StdinPipe()
+//	pipeIn, errIn := cmd.stdinPipe()
 //	if errIn != nil {
 //		return "", fmt.Errorf("stdinPipe error: %v", errIn)
 //	}

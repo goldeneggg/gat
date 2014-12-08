@@ -1,15 +1,16 @@
 package client
 
 import (
-	"bytes"
 	"fmt"
-	"io/ioutil"
-	"net/http"
 	"strings"
+
+	h "github.com/goldeneggg/gat/client/http"
 )
 
 const (
-	NAME_PLAYGO    = "playgo"
+	// NamePlaygo represents a factory key for "playgo"
+	NamePlaygo = "playgo"
+
 	playgoURL      = "https://play.golang.org/share"
 	shareURLPrefix = "https://play.golang.org/p/"
 )
@@ -20,24 +21,19 @@ func newPlaygo() *playgo {
 	return &playgo{}
 }
 
+var _ Client = &playgo{}
+
 func (p *playgo) CheckConf() error {
 	return nil
 }
 
 func (p *playgo) Cat(catInf *CatInfo) (string, error) {
-	if res, err := p.postPlaygo(catInf.Files); err != nil {
+	res, err := p.postPlaygo(catInf.Files)
+	if err != nil {
 		return "", err
-	} else {
-		return res, nil
 	}
-}
 
-func (p *playgo) CatP(catInf *CatInfo, chOut chan string, chErr chan error) {
-	if res, err := p.Cat(catInf); err != nil {
-		chErr <- err
-	} else {
-		chOut <- res
-	}
+	return res, nil
 }
 
 func (p *playgo) postPlaygo(files map[string][]byte) (string, error) {
@@ -46,24 +42,11 @@ func (p *playgo) postPlaygo(files map[string][]byte) (string, error) {
 		return "", err
 	}
 
-	req, err := p.getRequest(content)
-	if err != nil {
-		return "", err
+	hr := &h.HttpReq{
+		Body: content,
 	}
 
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		return "", err
-	}
-
-	defer resp.Body.Close()
-
-	if resp.StatusCode != 200 {
-		return "", fmt.Errorf("invalid status: %d", resp.StatusCode)
-	}
-
-	respBody, err := ioutil.ReadAll(resp.Body)
+	respBody, err := hr.Post(playgoURL)
 	if err != nil {
 		return "", err
 	}
@@ -85,13 +68,4 @@ func (p *playgo) getContent(files map[string][]byte) ([]byte, error) {
 	}
 
 	return content, nil
-}
-
-func (p *playgo) getRequest(content []byte) (*http.Request, error) {
-	req, err := http.NewRequest("POST", playgoURL, bytes.NewReader(content))
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
 }

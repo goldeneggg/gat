@@ -1,22 +1,22 @@
 package client
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"net/http"
 	"path"
-	"time"
+
+	h "github.com/goldeneggg/gat/client/http"
 )
 
 const (
-	NAME_GIST   = "gist"
+	// NameGist represents a factory key for "gist"
+	NameGist = "gist"
+
 	gistTimeout = 10
 )
 
 type gist struct {
-	ApiDomain   string `json:"api-domain"`
+	APIDomain   string `json:"api-domain"`
 	AccessToken string `json:"access-token"`
 	Timeout     int    `json:"timeout"`
 	Description string `json:"description"`
@@ -27,8 +27,10 @@ func newGist() *gist {
 	return &gist{}
 }
 
+var _ Client = &gist{}
+
 func (g *gist) CheckConf() error {
-	if len(g.ApiDomain) == 0 {
+	if len(g.APIDomain) == 0 {
 		return fmt.Errorf("api-domain is empty")
 	}
 
@@ -44,19 +46,12 @@ func (g *gist) CheckConf() error {
 }
 
 func (g *gist) Cat(catInf *CatInfo) (string, error) {
-	if createdUrl, err := g.postGist(catInf.Files); err != nil {
+	createdURL, err := g.postGist(catInf.Files)
+	if err != nil {
 		return "", err
-	} else {
-		return createdUrl, nil
 	}
-}
 
-func (g *gist) CatP(catInf *CatInfo, chOut chan string, chErr chan error) {
-	if createdUrl, err := g.Cat(catInf); err != nil {
-		chErr <- err
-	} else {
-		chOut <- createdUrl
-	}
+	return createdURL, nil
 }
 
 func (g *gist) postGist(files map[string][]byte) (string, error) {
@@ -68,24 +63,12 @@ func (g *gist) postGist(files map[string][]byte) (string, error) {
 	}
 	L.Debug("payload: ", string(pl))
 
-	req, err := g.getRequest(pl)
-	if err != nil {
-		return "", err
+	hr := &h.HttpReq{
+		Body:    pl,
+		Headers: map[string]string{"Authorization": "token " + g.AccessToken},
 	}
 
-	c := &http.Client{Timeout: time.Duration(g.Timeout) * time.Second}
-	resp, err := c.Do(req)
-	if err != nil {
-		return "", err
-	}
-
-	defer resp.Body.Close()
-
-	if resp.StatusCode != 201 {
-		return "", fmt.Errorf("invalid status: %d", resp.StatusCode)
-	}
-
-	respBody, err := ioutil.ReadAll(resp.Body)
+	respBody, err := hr.Post(g.APIDomain + "/gists")
 	if err != nil {
 		return "", err
 	}
@@ -114,22 +97,12 @@ func (g *gist) getPayload(files map[string][]byte) ([]byte, error) {
 		Files:       plFiles,
 	}
 
-	if b, err := json.Marshal(pl); err != nil {
-		return []byte{}, err
-	} else {
-		return b, nil
-	}
-}
-
-func (g *gist) getRequest(payload []byte) (*http.Request, error) {
-	req, err := http.NewRequest("POST", g.ApiDomain+"/gists", bytes.NewReader(payload))
+	b, err := json.Marshal(pl)
 	if err != nil {
-		return nil, err
+		return []byte{}, err
 	}
 
-	req.Header.Add("Authorization", "token "+g.AccessToken)
-
-	return req, nil
+	return b, nil
 }
 
 func (g *gist) parseGistResp(respBody []byte) (string, error) {

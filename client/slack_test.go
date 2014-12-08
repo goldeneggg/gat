@@ -11,14 +11,14 @@ type SlackTest struct {
 var sTests = []SlackTest{
 	SlackTest{
 		s: &slack{
-			WebhookUrl: "hook1",
+			WebhookURL: "hook1",
 		},
 		content:    []byte("content1"),
 		expPayload: `{"text":"content1","mrkdwn":true,"unfurl_links":true}`,
 	},
 	SlackTest{
 		s: &slack{
-			WebhookUrl: "hook2",
+			WebhookURL: "hook2",
 			UserName:   "user2",
 		},
 		content:    []byte("content2"),
@@ -26,7 +26,7 @@ var sTests = []SlackTest{
 	},
 	SlackTest{
 		s: &slack{
-			WebhookUrl: "hook3",
+			WebhookURL: "hook3",
 			UserName:   "user3",
 			Icon:       "icon3",
 		},
@@ -35,7 +35,7 @@ var sTests = []SlackTest{
 	},
 	SlackTest{
 		s: &slack{
-			WebhookUrl: "hook4",
+			WebhookURL: "hook4",
 			UserName:   "user4",
 			Icon:       "icon4",
 			Channel:    "channel4",
@@ -45,7 +45,7 @@ var sTests = []SlackTest{
 	},
 	SlackTest{
 		s: &slack{
-			WebhookUrl:      "hook5",
+			WebhookURL:      "hook5",
 			UserName:        "user5",
 			Icon:            "icon5",
 			Channel:         "channel5",
@@ -56,36 +56,36 @@ var sTests = []SlackTest{
 	},
 	SlackTest{
 		s: &slack{
-			WebhookUrl:      "hook6",
+			WebhookURL:      "hook6",
 			UserName:        "user6",
 			Icon:            "icon6",
 			Channel:         "channel6",
 			WithoutMarkdown: true,
-			WithoutUnfUrl:   true,
+			WithoutUnfURL:   true,
 		},
 		content:    []byte("content6"),
 		expPayload: `{"text":"content6","username":"user6","icon_url":"icon6","channel":"channel6","mrkdwn":false,"unfurl_links":false}`,
 	},
 	SlackTest{
 		s: &slack{
-			WebhookUrl:      "hook7",
+			WebhookURL:      "hook7",
 			UserName:        "user7",
 			Icon:            ":icon7:",
 			Channel:         "channel7",
 			WithoutMarkdown: true,
-			WithoutUnfUrl:   true,
+			WithoutUnfURL:   true,
 		},
 		content:    []byte("content7"),
 		expPayload: `{"text":"content7","username":"user7","icon_emoji":":icon7:","channel":"channel7","mrkdwn":false,"unfurl_links":false}`,
 	},
 	SlackTest{
 		s: &slack{
-			WebhookUrl:      "hook8",
+			WebhookURL:      "hook8",
 			UserName:        "user8",
 			Icon:            "::",
 			Channel:         "channel8",
 			WithoutMarkdown: true,
-			WithoutUnfUrl:   true,
+			WithoutUnfURL:   true,
 			Linkfy:          true,
 		},
 		content:    []byte("content8"),
@@ -112,7 +112,7 @@ func TestSlack(t *testing.T) {
 var testsSlackError = []SlackTest{
 	SlackTest{
 		s: &slack{
-			WebhookUrl: "",
+			WebhookURL: "",
 		},
 	},
 	SlackTest{

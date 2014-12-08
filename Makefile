@@ -11,9 +11,6 @@ LINTTARGET := ./...
 
 all: depbuild
 
-proftest:
-	[ ! -d $(PROFDIR) ] && mkdir $(PROFDIR); $(GO) test -bench . -benchmem -blockprofile $(PROFDIR)/block.out -cover -coverprofile $(PROFDIR)/cover.out -cpuprofile $(PROFDIR)/cpu.out -memprofile $(PROFDIR)/mem.out $(PROFTARGET)
-
 depbuild: depsave
 	$(GODEP) $(GO) build -o $(GOBIN)/$(BINNAME) $(PGMPKGPATH)
 
@@ -25,6 +22,9 @@ depvet: depsave
 
 depsave:
 	$(GODEP) save $(SAVETARGET)
+
+proftest:
+	[ ! -d $(PROFDIR) ] && mkdir $(PROFDIR); $(GO) test -bench . -benchmem -blockprofile $(PROFDIR)/block.out -cover -coverprofile $(PROFDIR)/cover.out -cpuprofile $(PROFDIR)/cpu.out -memprofile $(PROFDIR)/mem.out $(PROFTARGET)
 
 lint:
 	$(GOLINT) $(LINTTARGET)

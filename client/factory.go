@@ -8,11 +8,10 @@ import (
 )
 
 const (
-	// Default config file path (prefix dir is $HOME)
-	CONFIG_PATH = ".gat/conf.json"
+	configPath = ".gat/conf.json"
 )
 
-// Information to create new Client
+// Attr represents the configuration for NewClient
 type Attr struct {
 	// Target service name
 	Name string
@@ -24,25 +23,25 @@ type Attr struct {
 	Overwrites map[string]interface{}
 }
 
-// Create a new Client
+// NewClient returns a new Client,
 func NewClient(attr Attr) (Client, error) {
 	var clnt Client
 
 	name := attr.Name
 	switch name {
-	case NAME_OSCAT:
+	case NameOscat:
 		clnt = newOs()
-	case NAME_GIST:
+	case NameGist:
 		clnt = newGist()
-	case NAME_SLACK:
+	case NameSlack:
 		clnt = newSlack()
-	case NAME_PLAYGO:
+	case NamePlaygo:
 		clnt = newPlaygo()
 	default:
 		return clnt, fmt.Errorf("invalid service name: " + name)
 	}
 
-	confPath := os.Getenv("HOME") + "/" + CONFIG_PATH
+	confPath := os.Getenv("HOME") + "/" + configPath
 	if len(attr.ConfPath) > 0 {
 		confPath = attr.ConfPath
 	}

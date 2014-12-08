@@ -7,7 +7,4 @@ type Client interface {
 
 	// Concatnate file
 	Cat(catInf *CatInfo) (string, error)
-
-	// Concatnate file executing asynchronous parallel proccessing
-	CatP(catInf *CatInfo, chOut chan string, chErr chan error)
 }

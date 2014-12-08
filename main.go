@@ -18,7 +18,7 @@ func handleSigint() {
 	defer finalize(sts)
 
 	chSig := make(chan os.Signal)
-	signal.Notify(chSig, syscall.SIGINT)
+	signal.Notify(chSig, os.Interrupt, syscall.SIGTERM)
 
 	chSts := make(chan int)
 	go run(chSts)
@@ -37,7 +37,7 @@ func run(chSts chan int) {
 	app := cli.NewApp()
 	app.Name = "gat"
 	app.Version = VERSION
-	app.Usage = "Cat to anywhere"
+	app.Usage = "Utility tool of concatnating and printing file to various services"
 	app.Author = "@goldeneggg"
 	app.Email = "jpshadowapps@gmail.com"
 	app.Flags = globalFlags
