@@ -1,13 +1,11 @@
 package client
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"net/http"
 	"path"
-	"time"
+
+	h "github.com/goldeneggg/gat/client/http"
 )
 
 const (
@@ -68,25 +66,12 @@ func (g *gist) postGist(files map[string][]byte) (string, error) {
 	}
 	L.Debug("payload: ", string(pl))
 
-	req, err := g.getRequest(pl)
-	if err != nil {
-		return "", err
+	hr := &h.HttpReq{
+		Body:    pl,
+		Headers: map[string]string{"Authorization": "token " + g.AccessToken},
 	}
 
-	//c := &http.Client{Timeout: gistTimeout * time.Second} // if timeout is constant variable, it does not need to convert time.Duration
-	c := &http.Client{Timeout: time.Duration(g.Timeout) * time.Second}
-	resp, err := c.Do(req)
-	if err != nil {
-		return "", err
-	}
-
-	defer resp.Body.Close()
-
-	if resp.StatusCode != 201 {
-		return "", fmt.Errorf("invalid status: %d", resp.StatusCode)
-	}
-
-	respBody, err := ioutil.ReadAll(resp.Body)
+	respBody, err := hr.Post(g.ApiDomain + "/gists")
 	if err != nil {
 		return "", err
 	}
@@ -120,17 +105,6 @@ func (g *gist) getPayload(files map[string][]byte) ([]byte, error) {
 	} else {
 		return b, nil
 	}
-}
-
-func (g *gist) getRequest(payload []byte) (*http.Request, error) {
-	req, err := http.NewRequest("POST", g.ApiDomain+"/gists", bytes.NewReader(payload))
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Authorization", "token "+g.AccessToken)
-
-	return req, nil
 }
 
 func (g *gist) parseGistResp(respBody []byte) (string, error) {
