@@ -1,11 +1,10 @@
 package client
 
 import (
-	"bytes"
 	"fmt"
-	"io/ioutil"
-	"net/http"
 	"strings"
+
+	h "github.com/goldeneggg/gat/client/http"
 )
 
 const (
@@ -46,24 +45,11 @@ func (p *playgo) postPlaygo(files map[string][]byte) (string, error) {
 		return "", err
 	}
 
-	req, err := p.getRequest(content)
-	if err != nil {
-		return "", err
+	hr := &h.HttpReq{
+		Body: content,
 	}
 
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		return "", err
-	}
-
-	defer resp.Body.Close()
-
-	if resp.StatusCode != 200 {
-		return "", fmt.Errorf("invalid status: %d", resp.StatusCode)
-	}
-
-	respBody, err := ioutil.ReadAll(resp.Body)
+	respBody, err := hr.Post(playgoURL)
 	if err != nil {
 		return "", err
 	}
@@ -85,13 +71,4 @@ func (p *playgo) getContent(files map[string][]byte) ([]byte, error) {
 	}
 
 	return content, nil
-}
-
-func (p *playgo) getRequest(content []byte) (*http.Request, error) {
-	req, err := http.NewRequest("POST", playgoURL, bytes.NewReader(content))
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
 }
