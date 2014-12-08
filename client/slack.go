@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-
 	"regexp"
 
 	h "github.com/goldeneggg/gat/client/http"
