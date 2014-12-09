@@ -82,21 +82,23 @@ var commands = []cli.Command{
 		Usage:  "Cat to play.golang.org",
 		Action: exec,
 	},
-	cli.Command{
-		Name:  client.NameOscat,
-		Usage: "Cat using os cat",
-		Flags: []cli.Flag{
-			cli.BoolFlag{
-				Name:  "n, number",
-				Usage: "Number all output lines",
+	/*
+		cli.Command{
+			Name:  client.NameOscat,
+			Usage: "Cat using os cat",
+			Flags: []cli.Flag{
+				cli.BoolFlag{
+					Name:  "n, number",
+					Usage: "Number all output lines",
+				},
+				cli.BoolFlag{
+					Name:  "b, number-nonblank",
+					Usage: "Number nonempty output lines",
+				},
 			},
-			cli.BoolFlag{
-				Name:  "b, number-nonblank",
-				Usage: "Number nonempty output lines",
-			},
+			Action: exec,
 		},
-		Action: exec,
-	},
+	*/
 	cli.Command{
 		Name:   "list",
 		Usage:  "Show target service list",

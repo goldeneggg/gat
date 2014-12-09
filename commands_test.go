@@ -35,7 +35,7 @@ func ExampleVersion() {
 }
 
 func ExampleVersionRunningCommand() {
-	app.Run([]string{"", "-v", "os", testTextFile})
+	app.Run([]string{"", "-v", "gist", testTextFile})
 	// Output:
 	// gatTest version 0.1.0
 }
@@ -137,7 +137,6 @@ func ExampleRunListCommand() {
 	//   gist  - Cat to gist
 	//   slack  - Cat to slack
 	//   playgo  - Cat to play.golang.org
-	//   os  - Cat using os cat
 }
 
 func ExampleRunListCommandWithInput() {
@@ -147,9 +146,9 @@ func ExampleRunListCommandWithInput() {
 	//   gist  - Cat to gist
 	//   slack  - Cat to slack
 	//   playgo  - Cat to play.golang.org
-	//   os  - Cat using os cat
 }
 
+/*
 // "os" Command
 func ExampleRunOs() {
 	app.Run([]string{"", "-c", testCommandsDir + "/test_conf_os.json", "os", testTextFile})
@@ -158,6 +157,7 @@ func ExampleRunOs() {
 	// test2
 	// test3
 }
+*/
 
 /* XXX
 func ExampleRunOsMultiInput() {
@@ -172,6 +172,7 @@ func ExampleRunOsMultiInput() {
 }
 */
 
+/*
 func ExampleRunOsN() {
 	app.Run([]string{"", "-c", testCommandsDir + "/test_conf_os_n.json", "os", testTextFile})
 	// Output:
@@ -230,6 +231,7 @@ func ExampleRunOsNoTarget() {
 	// Output:
 	//
 }
+*/
 
 // abnormal cases
 func ExampleInvalidCommand() {
@@ -245,7 +247,7 @@ func ExampleEmptyCommand() {
 }
 
 func ExampleNotExistFile() {
-	app.Run([]string{"", "os", testCommandsDir + "/notexist.txt"})
+	app.Run([]string{"", "gist", testCommandsDir + "/notexist.txt"})
 	// Output:
 	//
 }

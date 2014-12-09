@@ -19,13 +19,6 @@ Target services
 * [windows 386](https://drone.io/github.com/goldeneggg/gat/files/artifacts/bin/windows_386/gat.exe)
 
 
-### Using "go get"
-
-```bash
-$ go get github.com/goldeneggg/gat
-```
-
-
 ## Usage
 
 ```bash
@@ -37,7 +30,7 @@ USAGE:
    OTHER_OUTPUT_COMMAND | gat [global options] command [command options]
 
 VERSION:
-   0.2.0
+   0.2.1
 
 AUTHOR:
   @goldeneggg - <jpshadowapps@gmail.com>
@@ -46,7 +39,6 @@ COMMANDS:
    gist         Cat to gist
    slack        Cat to slack
    playgo       Cat to play.golang.org
-   os           Cat using os cat
    list         Show target service list
    help, h      Shows a list of commands or help for one command
 
@@ -225,7 +217,6 @@ $ gat list
 gist  - Cat to gist
 slack  - Cat to slack
 playgo  - Cat to play.golang.org
-os  - Cat using os cat
 ```
 
 ### Run debug mode
