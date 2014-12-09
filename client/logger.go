@@ -41,7 +41,7 @@ func (l *Log) Debug(v ...interface{}) {
 // DebugF writes the output for a debug event. Arguments are handled in the manner of fmt.Printf.
 func (l *Log) DebugF(format string, v ...interface{}) {
 	if l.isDebug {
-		l.debugLogger.Printf(format, v)
+		l.debugLogger.Printf(format, v...)
 	}
 }
 
