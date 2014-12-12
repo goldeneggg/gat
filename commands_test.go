@@ -1,6 +1,10 @@
-package main
+package main_test
 
-import "github.com/codegangsta/cli"
+import (
+	"github.com/codegangsta/cli"
+
+	. "github.com/goldeneggg/gat"
+)
 
 const (
 	testCommandsDir = "./test/commands_test"
@@ -14,13 +18,13 @@ var app *cli.App
 func init() {
 	app = cli.NewApp()
 	app.Name = "gatTest"
-	app.Version = "0.1.0"
+	app.Version = Version
 	app.Usage = "Test gat"
 	app.Author = "@goldeneggg"
 	app.Email = "jpshadowapps@gmail.com"
 
-	app.Flags = globalFlags
-	app.Commands = commands
+	app.Flags = GlobalFlags
+	app.Commands = Commands
 }
 
 // global flags
@@ -31,13 +35,13 @@ func ExampleHelp() {
 func ExampleVersion() {
 	app.Run([]string{"", "-v"})
 	// Output:
-	// gatTest version 0.1.0
+	// gatTest version 0.3.0
 }
 
 func ExampleVersionRunningCommand() {
 	app.Run([]string{"", "-v", "gist", testTextFile})
 	// Output:
-	// gatTest version 0.1.0
+	// gatTest version 0.3.0
 }
 
 // "gist" Command

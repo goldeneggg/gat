@@ -42,7 +42,7 @@ func (p *playgo) postPlaygo(files map[string][]byte) (string, error) {
 		return "", err
 	}
 
-	hr := &h.HttpReq{
+	hr := &h.Req{
 		Body: content,
 	}
 

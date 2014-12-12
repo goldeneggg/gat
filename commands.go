@@ -10,7 +10,8 @@ import (
 	"github.com/goldeneggg/gat/client"
 )
 
-var commands = []cli.Command{
+// Commands are executable commands.
+var Commands = []cli.Command{
 	cli.Command{
 		Name:  client.NameGist,
 		Usage: "Cat to gist",

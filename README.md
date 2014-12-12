@@ -30,7 +30,7 @@ USAGE:
    OTHER_OUTPUT_COMMAND | gat [global options] command [command options]
 
 VERSION:
-   0.2.1
+   0.3.0
 
 AUTHOR:
   @goldeneggg - <jpshadowapps@gmail.com>

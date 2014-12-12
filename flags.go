@@ -2,7 +2,8 @@ package main
 
 import "github.com/codegangsta/cli"
 
-var globalFlags = []cli.Flag{
+// GlobalFlags are flags of gat command
+var GlobalFlags = []cli.Flag{
 	cli.StringFlag{
 		Name:  "confpath, c",
 		Usage: "Your original config json path",

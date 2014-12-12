@@ -11,26 +11,30 @@ import (
 )
 
 const (
-	DEFAULT_TIMEOUT = 10
+	defaultTimeout = 10
 )
 
-var ToSec = DEFAULT_TIMEOUT
+// ToSec is timeout duration second
+var ToSec = defaultTimeout
 
-type HttpReq struct {
+// A Req is http request attributes
+type Req struct {
 	Body    []byte
 	Queries map[string]string
 	Headers map[string]string
 }
 
-func (hr *HttpReq) Post(u string) ([]byte, error) {
+// Post requests contents to argument URL by POST method
+func (hr *Req) Post(u string) ([]byte, error) {
 	return hr.req("POST", u)
 }
 
-func (hr *HttpReq) Get(u string) ([]byte, error) {
+// Get requests contents to argument URL by GET method
+func (hr *Req) Get(u string) ([]byte, error) {
 	return hr.req("GET", u)
 }
 
-func (hr *HttpReq) req(m string, u string) ([]byte, error) {
+func (hr *Req) req(m string, u string) ([]byte, error) {
 	req, err := http.NewRequest(m, u, bytes.NewReader(hr.Body))
 	if err != nil {
 		return nil, err
@@ -60,7 +64,7 @@ func (hr *HttpReq) req(m string, u string) ([]byte, error) {
 	return respBody, nil
 }
 
-func (hr *HttpReq) buildQuery(r *http.Request) {
+func (hr *Req) buildQuery(r *http.Request) {
 	values := url.Values{}
 	for k, v := range hr.Queries {
 		values.Set(k, v)
@@ -69,7 +73,7 @@ func (hr *HttpReq) buildQuery(r *http.Request) {
 	r.URL.RawQuery = values.Encode()
 }
 
-func (hr *HttpReq) buildHeader(r *http.Request) {
+func (hr *Req) buildHeader(r *http.Request) {
 	for k, v := range hr.Headers {
 		r.Header.Set(k, v)
 	}

@@ -68,7 +68,7 @@ func (s *slack) postSlack(files map[string][]byte) (string, error) {
 	}
 	L.Debug("payload: ", string(pl))
 
-	hr := &h.HttpReq{
+	hr := &h.Req{
 		Body: pl,
 	}
 

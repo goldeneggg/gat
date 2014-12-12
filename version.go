@@ -1,6 +1,6 @@
 package main
 
 const (
-	// VERSION is gat version
-	VERSION = "0.2.1"
+	// Version is gat version
+	Version = "0.3.0"
 )

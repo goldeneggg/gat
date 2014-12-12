@@ -63,7 +63,7 @@ func (g *gist) postGist(files map[string][]byte) (string, error) {
 	}
 	L.Debug("payload: ", string(pl))
 
-	hr := &h.HttpReq{
+	hr := &h.Req{
 		Body:    pl,
 		Headers: map[string]string{"Authorization": "token " + g.AccessToken},
 	}

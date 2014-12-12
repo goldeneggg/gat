@@ -36,12 +36,12 @@ func run(chSts chan int) {
 
 	app := cli.NewApp()
 	app.Name = "gat"
-	app.Version = VERSION
+	app.Version = Version
 	app.Usage = "Utility tool of concatnating and printing file to various services"
 	app.Author = "@goldeneggg"
 	app.Email = "jpshadowapps@gmail.com"
-	app.Flags = globalFlags
-	app.Commands = commands
+	app.Flags = GlobalFlags
+	app.Commands = Commands
 
 	if err := app.Run(os.Args); err != nil {
 		fmt.Fprintln(os.Stderr, err)
