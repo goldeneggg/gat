@@ -13,10 +13,8 @@ const (
 	testEmptyFile   = testCommandsDir + "/test_empty.txt"
 )
 
-var app *cli.App
-
-func init() {
-	app = cli.NewApp()
+func getApp() *cli.App {
+	app := cli.NewApp()
 	app.Name = "gatTest"
 	app.Version = Version
 	app.Usage = "Test gat"
@@ -25,58 +23,60 @@ func init() {
 
 	app.Flags = GlobalFlags
 	app.Commands = Commands
+
+	return app
 }
 
 // global flags
 func ExampleHelp() {
-	app.Run([]string{"", "-h"})
+	getApp().Run([]string{"", "-h"})
 }
 
 func ExampleVersion() {
-	app.Run([]string{"", "-v"})
+	getApp().Run([]string{"", "-v"})
 	// Output:
 	// gatTest version 0.3.0
 }
 
 func ExampleVersionRunningCommand() {
-	app.Run([]string{"", "-v", "gist", testTextFile})
+	getApp().Run([]string{"", "-v", "gist", testTextFile})
 	// Output:
 	// gatTest version 0.3.0
 }
 
 // "gist" Command
 func ExampleRunGistEmptyDomain() {
-	app.Run([]string{"", "-c", testCommandsDir + "/test_conf_gist_e_domain.json", "gist", testTextFile})
+	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_gist_e_domain.json", "gist", testTextFile})
 	// Output:
 }
 
 func ExampleRunGistEmptyToken() {
-	app.Run([]string{"", "-c", testCommandsDir + "/test_conf_gist_e_token.json", "gist", testTextFile})
+	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_gist_e_token.json", "gist", testTextFile})
 	// Output:
 }
 
 func ExampleRunGistNullDomain() {
-	app.Run([]string{"", "-c", testCommandsDir + "/test_conf_gist_null_domain.json", "gist", testTextFile})
+	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_gist_null_domain.json", "gist", testTextFile})
 	// Output:
 }
 
 func ExampleRunGistNullToken() {
-	app.Run([]string{"", "-c", testCommandsDir + "/test_conf_gist_null_token.json", "gist", testTextFile})
+	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_gist_null_token.json", "gist", testTextFile})
 	// Output:
 }
 
 func ExampleRunGistInvalidDomain() {
-	app.Run([]string{"", "-c", testCommandsDir + "/test_conf_gist_i_domain.json", "gist", testTextFile})
+	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_gist_i_domain.json", "gist", testTextFile})
 	// Output:
 }
 
 func ExampleRunGistNotFound() {
-	app.Run([]string{"", "-c", testCommandsDir + "/test_conf_gist_notfound.json", "gist", testTextFile})
+	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_gist_notfound.json", "gist", testTextFile})
 	// Output:
 }
 
 func ExampleRunGistHelp() {
-	app.Run([]string{"", "-c", testCommandsDir + "/test_conf_gist_e_domain.json", "gist", "-h"})
+	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_gist_e_domain.json", "gist", "-h"})
 	// Output:
 	// NAME:
 	//    gist - Cat to gist
@@ -94,17 +94,17 @@ func ExampleRunGistHelp() {
 
 // "slack" command
 func ExampleRunSlackEmptyUrl() {
-	app.Run([]string{"", "-c", testCommandsDir + "/test_conf_slack_e_domain.json", "slack", testTextFile})
+	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_slack_e_domain.json", "slack", testTextFile})
 	// Output:
 }
 
 func ExampleRunSlackNullUrl() {
-	app.Run([]string{"", "-c", testCommandsDir + "/test_conf_slack_null_domain.json", "slack", testTextFile})
+	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_slack_null_domain.json", "slack", testTextFile})
 	// Output:
 }
 
 func ExampleRunSlackHelp() {
-	app.Run([]string{"", "-c", testCommandsDir + "/test_conf_slack_e_domain.json", "slack", "-h"})
+	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_slack_e_domain.json", "slack", "-h"})
 	// Output:
 	// NAME:
 	//    slack - Cat to slack
@@ -124,7 +124,7 @@ func ExampleRunSlackHelp() {
 }
 
 func ExampleRunPlaygoHelp() {
-	app.Run([]string{"", "-c", testCommandsDir + "/test_conf_slack_e_domain.json", "playgo", "-h"})
+	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_slack_e_domain.json", "playgo", "-h"})
 	// Output:
 	// NAME:
 	//    playgo - Cat to play.golang.org
@@ -135,7 +135,7 @@ func ExampleRunPlaygoHelp() {
 
 // "list" Command
 func ExampleRunListCommand() {
-	app.Run([]string{"", "list"})
+	getApp().Run([]string{"", "list"})
 	// Output:
 	// Supported gat commands are:
 	//   gist  - Cat to gist
@@ -144,7 +144,7 @@ func ExampleRunListCommand() {
 }
 
 func ExampleRunListCommandWithInput() {
-	app.Run([]string{"", "list", testTextFile})
+	getApp().Run([]string{"", "list", testTextFile})
 	// Output:
 	// Supported gat commands are:
 	//   gist  - Cat to gist
@@ -155,7 +155,7 @@ func ExampleRunListCommandWithInput() {
 /*
 // "os" Command
 func ExampleRunOs() {
-	app.Run([]string{"", "-c", testCommandsDir + "/test_conf_os.json", "os", testTextFile})
+	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_os.json", "os", testTextFile})
 	// Output:
 	// test1
 	// test2
@@ -165,7 +165,7 @@ func ExampleRunOs() {
 
 /* XXX
 func ExampleRunOsMultiInput() {
-	app.Run([]string{"", "-c", testCommandsDir + "/test_conf_os.json", "os", testTextFile, testTextFile2})
+	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_os.json", "os", testTextFile, testTextFile2})
 	// Output:
 	// test1
 	// test2
@@ -178,7 +178,7 @@ func ExampleRunOsMultiInput() {
 
 /*
 func ExampleRunOsN() {
-	app.Run([]string{"", "-c", testCommandsDir + "/test_conf_os_n.json", "os", testTextFile})
+	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_os_n.json", "os", testTextFile})
 	// Output:
 	//      1	test1
 	//      2	test2
@@ -186,7 +186,7 @@ func ExampleRunOsN() {
 }
 
 func ExampleRunOsB() {
-	app.Run([]string{"", "--confpath", testCommandsDir + "/test_conf_os_b.json", "os", testTextFile})
+	getApp().Run([]string{"", "--confpath", testCommandsDir + "/test_conf_os_b.json", "os", testTextFile})
 	// Output:
 	//      1	test1
 	//      2	test2
@@ -195,7 +195,7 @@ func ExampleRunOsB() {
 
 // use conf.json that does not have keys.
 func ExampleRunOsNoKey() {
-	app.Run([]string{"", "-c", testCommandsDir + "/test_conf_os_nokey.json", "os", testTextFile})
+	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_os_nokey.json", "os", testTextFile})
 	// Output:
 	// test1
 	// test2
@@ -203,7 +203,7 @@ func ExampleRunOsNoKey() {
 }
 
 func ExampleRunOsNoKeyOptN() {
-	app.Run([]string{"", "-c", testCommandsDir + "/test_conf_os_nokey.json", "os", "-n", testTextFile})
+	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_os_nokey.json", "os", "-n", testTextFile})
 	// Output:
 	//      1	test1
 	//      2	test2
@@ -211,7 +211,7 @@ func ExampleRunOsNoKeyOptN() {
 }
 
 func ExampleRunOsConfNFalseOptN() {
-	app.Run([]string{"", "-c", testCommandsDir + "/test_conf_os_n_false.json", "os", "-n", testTextFile})
+	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_os_n_false.json", "os", "-n", testTextFile})
 	// Output:
 	//      1	test1
 	//      2	test2
@@ -219,19 +219,19 @@ func ExampleRunOsConfNFalseOptN() {
 }
 
 func ExampleRunOsEmptyTarget() {
-	app.Run([]string{"", "-c", testCommandsDir + "/test_conf_os.json", "os", testEmptyFile})
+	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_os.json", "os", testEmptyFile})
 	// Output:
 	//
 }
 
 func ExampleRunOsDirTarget() {
-	app.Run([]string{"", "-c", testCommandsDir + "/test_conf_os.json", "os", testCommandsDir})
+	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_os.json", "os", testCommandsDir})
 	// Output:
 	//
 }
 
 func ExampleRunOsNoTarget() {
-	app.Run([]string{"", "-c", testCommandsDir + "/test_conf_os.json", "os"})
+	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_os.json", "os"})
 	// Output:
 	//
 }
@@ -239,19 +239,19 @@ func ExampleRunOsNoTarget() {
 
 // abnormal cases
 func ExampleInvalidCommand() {
-	app.Run([]string{"", "invalid", testTextFile})
+	getApp().Run([]string{"", "invalid", testTextFile})
 	// Output:
 	// No help topic for 'invalid'
 }
 
 func ExampleEmptyCommand() {
-	app.Run([]string{"", testTextFile})
+	getApp().Run([]string{"", testTextFile})
 	// Output:
 	// No help topic for './test/commands_test/test.txt'
 }
 
 func ExampleNotExistFile() {
-	app.Run([]string{"", "gist", testCommandsDir + "/notexist.txt"})
+	getApp().Run([]string{"", "gist", testCommandsDir + "/notexist.txt"})
 	// Output:
 	//
 }
