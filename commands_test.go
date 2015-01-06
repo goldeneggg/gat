@@ -45,6 +45,11 @@ func ExampleVersionRunningCommand() {
 }
 
 // "gist" Command
+func ExampleRunGistEmptyConf() {
+	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_empty.json", "gist", testTextFile})
+	// Output:
+}
+
 func ExampleRunGistEmptyDomain() {
 	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_gist_e_domain.json", "gist", testTextFile})
 	// Output:

@@ -57,10 +57,7 @@ func NewClient(attr Attr) (Client, error) {
 	return clnt, nil
 }
 
-func configure(name string,
-	confPath string,
-	attrs map[string]interface{},
-	client interface{}) error {
+func configure(name string, confPath string, ows map[string]interface{}, client interface{}) error {
 
 	f, err := ioutil.ReadFile(confPath)
 	if err != nil {
@@ -74,24 +71,22 @@ func configure(name string,
 	}
 
 	tMap, ok := m[name]
-	if !ok {
-		return fmt.Errorf("not exist config name: " + name)
-	}
+	if ok {
+		// overwrite by original attributes
+		for k, v := range ows {
+			tMap[k] = v
+		}
 
-	// overwrite by original attributes
-	for k, v := range attrs {
-		tMap[k] = v
-	}
+		// marshal from map to bytes(json)
+		b, err := json.Marshal(tMap)
+		if err != nil {
+			return err
+		}
 
-	// marshal from map to bytes(json)
-	b, err := json.Marshal(tMap)
-	if err != nil {
-		return err
-	}
-
-	// unmarshal to target client struct
-	if err := json.Unmarshal(b, client); err != nil {
-		return err
+		// unmarshal to target client struct
+		if err := json.Unmarshal(b, client); err != nil {
+			return err
+		}
 	}
 
 	return nil
