@@ -21,7 +21,8 @@ func handleSigint() {
 	chSig := make(chan os.Signal)
 	signal.Notify(chSig, os.Interrupt, syscall.SIGTERM)
 
-	ch := make(chan bool)
+	ch := make(chan struct{})
+
 	go run(ch)
 
 	select {
@@ -32,7 +33,9 @@ func handleSigint() {
 	}
 }
 
-func run(ch chan bool) {
+func run(ch chan struct{}) {
+	defer close(ch)
+
 	app := cli.NewApp()
 	app.Name = "gat"
 	app.Version = Version
@@ -46,8 +49,6 @@ func run(ch chan bool) {
 		fmt.Fprintln(os.Stderr, err)
 		exitSts = 1
 	}
-
-	ch <- true
 }
 
 func finalize() {
