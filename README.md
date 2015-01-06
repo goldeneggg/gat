@@ -187,14 +187,7 @@ USAGE:
   command playgo [arguments...]
 ```
 
-* Edit `~/.gat/conf.json` (need only key, contents is empty)
-
-```json
-{
-  "playgo" : {}
-}
-```
-
+* __Not__ need to edit `~/.gat/conf.json`
 * Result of `gat playgo` command is shared URL
 * __Only one .go file is available as argument__
     * Not .go file will be error.
