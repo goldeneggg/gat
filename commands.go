@@ -128,21 +128,25 @@ func exec(c *cli.Context) {
 	clnt, errN := client.NewClient(attr)
 	if errN != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", errN)
+		exitSts = 1
 		return
 	}
 
 	catInf, errB := buildCatInfo(c)
 	if errB != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", errB)
+		exitSts = 1
 		return
 	}
 
 	res, errC := clnt.Cat(catInf)
 	if errC != nil {
 		fmt.Fprintf(os.Stderr, "%v", errC)
-	} else {
-		fmt.Fprintf(os.Stdout, "%s", res)
+		exitSts = 1
+		return
 	}
+
+	fmt.Fprintf(os.Stdout, "%s", res)
 }
 
 func flags2map(c *cli.Context) map[string]interface{} {

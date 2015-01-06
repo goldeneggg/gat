@@ -9,31 +9,30 @@ import (
 	"github.com/codegangsta/cli"
 )
 
+var exitSts int
+
 func main() {
 	handleSigint()
 }
 
 func handleSigint() {
-	var sts int
-	defer finalize(sts)
+	defer finalize()
 
 	chSig := make(chan os.Signal)
 	signal.Notify(chSig, os.Interrupt, syscall.SIGTERM)
 
-	chSts := make(chan int)
-	go run(chSts)
+	ch := make(chan bool)
+	go run(ch)
 
 	select {
 	case <-chSig:
 		fmt.Fprintln(os.Stderr, "CTRL-C; exiting")
-		sts = 1
-	case sts = <-chSts:
+		exitSts = 1
+	case <-ch:
 	}
 }
 
-func run(chSts chan int) {
-	var sts int
-
+func run(ch chan bool) {
 	app := cli.NewApp()
 	app.Name = "gat"
 	app.Version = Version
@@ -45,12 +44,12 @@ func run(chSts chan int) {
 
 	if err := app.Run(os.Args); err != nil {
 		fmt.Fprintln(os.Stderr, err)
-		sts = 1
+		exitSts = 1
 	}
 
-	chSts <- sts
+	ch <- true
 }
 
-func finalize(sts int) {
-	os.Exit(sts)
+func finalize() {
+	os.Exit(exitSts)
 }
