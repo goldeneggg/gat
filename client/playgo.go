@@ -15,13 +15,18 @@ const (
 	shareURLPrefix = "https://play.golang.org/p/"
 )
 
+var (
+	_ Client = &playgo{}
+
+	errPlaygoNothing = func(l int) error { return fmt.Errorf("Only 1 go file is available, but not 1: %d", l) }
+	errPlaygoNotGo   = func(f string) error { return fmt.Errorf("file %s is not .go file", f) }
+)
+
 type playgo struct{}
 
 func newPlaygo() *playgo {
 	return &playgo{}
 }
-
-var _ Client = &playgo{}
 
 func (p *playgo) CheckConf() error {
 	return nil
@@ -56,13 +61,13 @@ func (p *playgo) postPlaygo(files map[string][]byte) (string, error) {
 
 func (p *playgo) getContent(files map[string][]byte) ([]byte, error) {
 	if len(files) > 1 {
-		return []byte{}, fmt.Errorf("Only 1 go file is available, but not 1: %d", len(files))
+		return []byte{}, errPlaygoNothing(len(files))
 	}
 
 	var content []byte
 	for f, in := range files {
 		if !strings.HasSuffix(f, ".go") {
-			return []byte{}, fmt.Errorf("file %s is not .go file", f)
+			return []byte{}, errPlaygoNotGo(f)
 		}
 		content = in
 	}

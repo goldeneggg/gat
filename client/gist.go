@@ -15,6 +15,14 @@ const (
 	gistTimeout = 10
 )
 
+var (
+	_ Client = &gist{}
+
+	errGistDomain  = fmt.Errorf("api-domain is empty")
+	errGistToken   = fmt.Errorf("access-token is empty")
+	errGistPayload = fmt.Errorf("payload is empty")
+)
+
 type gist struct {
 	APIDomain   string `json:"api-domain"`
 	AccessToken string `json:"access-token"`
@@ -27,15 +35,13 @@ func newGist() *gist {
 	return &gist{}
 }
 
-var _ Client = &gist{}
-
 func (g *gist) CheckConf() error {
 	if len(g.APIDomain) == 0 {
-		return fmt.Errorf("api-domain is empty")
+		return errGistDomain
 	}
 
 	if len(g.AccessToken) == 0 {
-		return fmt.Errorf("access-token is empty")
+		return errGistToken
 	}
 
 	if g.Timeout < 0 {
@@ -59,7 +65,7 @@ func (g *gist) postGist(files map[string][]byte) (string, error) {
 	if err != nil {
 		return "", err
 	} else if len(pl) == 2 {
-		return "", fmt.Errorf("payload is empty")
+		return "", errGistPayload
 	}
 	L.Debug("payload: ", string(pl))
 

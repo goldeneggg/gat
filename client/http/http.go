@@ -14,8 +14,12 @@ const (
 	defaultTimeout = 10
 )
 
-// ToSec is timeout duration second
-var ToSec = defaultTimeout
+var (
+	// ToSec is timeout duration second
+	ToSec = defaultTimeout
+
+	errInvalidStatus = func(s int) error { return fmt.Errorf("invalid status: %d", s) }
+)
 
 // A Req is http request attributes
 type Req struct {
@@ -53,7 +57,7 @@ func (hr *Req) request(m string, u string) ([]byte, error) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode >= http.StatusBadRequest {
-		return nil, fmt.Errorf("invalid status: %d", resp.StatusCode)
+		return nil, errInvalidStatus(resp.StatusCode)
 	}
 
 	respBody, err := ioutil.ReadAll(resp.Body)

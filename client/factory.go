@@ -11,6 +11,10 @@ const (
 	configPath = ".gat/conf.json"
 )
 
+var (
+	errFactoryName = func(n string) error { return fmt.Errorf("invalid name: %d", n) }
+)
+
 // Attr represents the configuration for NewClient
 type Attr struct {
 	// Target service name
@@ -38,7 +42,7 @@ func NewClient(attr Attr) (Client, error) {
 	case NamePlaygo:
 		clnt = newPlaygo()
 	default:
-		return clnt, fmt.Errorf("invalid service name: " + name)
+		return clnt, errFactoryName(name)
 	}
 
 	confPath := os.Getenv("HOME") + "/" + configPath

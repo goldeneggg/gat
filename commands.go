@@ -11,101 +11,106 @@ import (
 )
 
 // Commands are executable commands.
-var Commands = []cli.Command{
-	cli.Command{
-		Name:  client.NameGist,
-		Usage: "Cat to gist",
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "api-domain",
-				Usage: "Github api domain",
-			},
-			cli.StringFlag{
-				Name:  "access-token",
-				Usage: "Github api access token",
-			},
-			cli.IntFlag{
-				Name:  "timeout",
-				Usage: "Timeout for connection",
-			},
-			cli.StringFlag{
-				Name:  "description, d",
-				Usage: "A description of the gist",
-			},
-			cli.BoolFlag{
-				Name:  "public, p",
-				Usage: "Indicates whether the gist is public. Default: false",
-			},
-		},
-		Action: exec,
-	},
-	cli.Command{
-		Name:  client.NameSlack,
-		Usage: "Cat to slack",
-		Flags: []cli.Flag{
-			cli.StringFlag{
-				Name:  "webhook-url",
-				Usage: "Webhook URL",
-			},
-			cli.StringFlag{
-				Name:  "channel, c",
-				Usage: "Target channel",
-			},
-			cli.StringFlag{
-				Name:  "username, u",
-				Usage: "Username",
-			},
-			cli.StringFlag{
-				Name:  "icon, i",
-				Usage: "Icon url or emoji format text (:EMOJI_NAME:)",
-			},
-			cli.IntFlag{
-				Name:  "timeout",
-				Usage: "Timeout for connection",
-			},
-			cli.BoolFlag{
-				Name:  "without-markdown",
-				Usage: "Not format slack's markdown",
-			},
-			cli.BoolFlag{
-				Name:  "without-unfurl",
-				Usage: "Not unfurl media links",
-			},
-			cli.BoolFlag{
-				Name:  "linkfy, l",
-				Usage: "Linkify channel names (starting with a '#') and usernames (starting with an '@')",
-			},
-		},
-		Action: exec,
-	},
-	cli.Command{
-		Name:   client.NamePlaygo,
-		Usage:  "Cat to play.golang.org",
-		Action: exec,
-	},
-	/*
+var (
+	Commands = []cli.Command{
 		cli.Command{
-			Name:  client.NameOscat,
-			Usage: "Cat using os cat",
+			Name:  client.NameGist,
+			Usage: "Cat to gist",
 			Flags: []cli.Flag{
-				cli.BoolFlag{
-					Name:  "n, number",
-					Usage: "Number all output lines",
+				cli.StringFlag{
+					Name:  "api-domain",
+					Usage: "Github api domain",
+				},
+				cli.StringFlag{
+					Name:  "access-token",
+					Usage: "Github api access token",
+				},
+				cli.IntFlag{
+					Name:  "timeout",
+					Usage: "Timeout for connection",
+				},
+				cli.StringFlag{
+					Name:  "description, d",
+					Usage: "A description of the gist",
 				},
 				cli.BoolFlag{
-					Name:  "b, number-nonblank",
-					Usage: "Number nonempty output lines",
+					Name:  "public, p",
+					Usage: "Indicates whether the gist is public. Default: false",
 				},
 			},
 			Action: exec,
 		},
-	*/
-	cli.Command{
-		Name:   "list",
-		Usage:  "Show target service list",
-		Action: list,
-	},
-}
+		cli.Command{
+			Name:  client.NameSlack,
+			Usage: "Cat to slack",
+			Flags: []cli.Flag{
+				cli.StringFlag{
+					Name:  "webhook-url",
+					Usage: "Webhook URL",
+				},
+				cli.StringFlag{
+					Name:  "channel, c",
+					Usage: "Target channel",
+				},
+				cli.StringFlag{
+					Name:  "username, u",
+					Usage: "Username",
+				},
+				cli.StringFlag{
+					Name:  "icon, i",
+					Usage: "Icon url or emoji format text (:EMOJI_NAME:)",
+				},
+				cli.IntFlag{
+					Name:  "timeout",
+					Usage: "Timeout for connection",
+				},
+				cli.BoolFlag{
+					Name:  "without-markdown",
+					Usage: "Not format slack's markdown",
+				},
+				cli.BoolFlag{
+					Name:  "without-unfurl",
+					Usage: "Not unfurl media links",
+				},
+				cli.BoolFlag{
+					Name:  "linkfy, l",
+					Usage: "Linkify channel names (starting with a '#') and usernames (starting with an '@')",
+				},
+			},
+			Action: exec,
+		},
+		cli.Command{
+			Name:   client.NamePlaygo,
+			Usage:  "Cat to play.golang.org",
+			Action: exec,
+		},
+		/*
+			cli.Command{
+				Name:  client.NameOscat,
+				Usage: "Cat using os cat",
+				Flags: []cli.Flag{
+					cli.BoolFlag{
+						Name:  "n, number",
+						Usage: "Number all output lines",
+					},
+					cli.BoolFlag{
+						Name:  "b, number-nonblank",
+						Usage: "Number nonempty output lines",
+					},
+				},
+				Action: exec,
+			},
+		*/
+		cli.Command{
+			Name:   "list",
+			Usage:  "Show target service list",
+			Action: list,
+		},
+	}
+
+	errInputIsEmpty = func(n string) error { return fmt.Errorf("input %s is empty", n) }
+	errInputIsDir   = func(n string) error { return fmt.Errorf("input %s is directory", n) }
+)
 
 func exec(c *cli.Context) {
 	isDebug := c.GlobalBool("debug")
@@ -208,10 +213,10 @@ func readInput(file *os.File) ([]byte, error) {
 	client.L.DebugF("file stat IsDir: %v", stat.IsDir())
 	client.L.DebugF("file stat Sys: %v", stat.Sys())
 	if stat.Size() == 0 {
-		return nil, fmt.Errorf("input %s is empty", stat.Name())
+		return nil, errInputIsEmpty(stat.Name())
 	}
 	if stat.IsDir() {
-		return nil, fmt.Errorf("input %s is directory", stat.Name())
+		return nil, errInputIsDir(stat.Name())
 	}
 
 	return ioutil.ReadAll(file)

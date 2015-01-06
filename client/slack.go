@@ -16,6 +16,13 @@ const (
 	slackTimeout = 10
 )
 
+var (
+	_ Client = &slack{}
+
+	errSlackURL     = fmt.Errorf("webhook-url is empty")
+	errSlackPayload = fmt.Errorf("payload is empty")
+)
+
 type slack struct {
 	WebhookURL      string `json:"webhook-url"`
 	UserName        string `json:"username"`
@@ -31,11 +38,9 @@ func newSlack() *slack {
 	return &slack{}
 }
 
-var _ Client = &slack{}
-
 func (s *slack) CheckConf() error {
 	if len(s.WebhookURL) == 0 {
-		return fmt.Errorf("webhook-url is empty")
+		return errSlackURL
 	}
 
 	if s.Timeout < 0 {
@@ -64,7 +69,7 @@ func (s *slack) postSlack(files map[string][]byte) (string, error) {
 	if err != nil {
 		return "", err
 	} else if len(pl) == 2 {
-		return "", fmt.Errorf("payload is empty")
+		return "", errSlackPayload
 	}
 	L.Debug("payload: ", string(pl))
 
