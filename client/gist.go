@@ -16,7 +16,7 @@ const (
 )
 
 var (
-	_ Client = &gist{}
+	_ Client = new(gist)
 
 	errGistDomain  = fmt.Errorf("api-domain is empty")
 	errGistToken   = fmt.Errorf("access-token is empty")
@@ -32,7 +32,7 @@ type gist struct {
 }
 
 func newGist() *gist {
-	return &gist{}
+	return new(gist)
 }
 
 func (g *gist) CheckConf() error {

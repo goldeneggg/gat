@@ -16,7 +16,7 @@ const (
 )
 
 var (
-	_ Client = &playgo{}
+	_ Client = new(playgo)
 
 	errPlaygoNothing = func(l int) error { return fmt.Errorf("Only 1 go file is available, but not 1: %d", l) }
 	errPlaygoNotGo   = func(f string) error { return fmt.Errorf("file %s is not .go file", f) }
@@ -25,7 +25,7 @@ var (
 type playgo struct{}
 
 func newPlaygo() *playgo {
-	return &playgo{}
+	return new(playgo)
 }
 
 func (p *playgo) CheckConf() error {

@@ -17,7 +17,7 @@ const (
 )
 
 var (
-	_ Client = &slack{}
+	_ Client = new(slack)
 
 	errSlackURL     = fmt.Errorf("webhook-url is empty")
 	errSlackPayload = fmt.Errorf("payload is empty")
@@ -35,7 +35,7 @@ type slack struct {
 }
 
 func newSlack() *slack {
-	return &slack{}
+	return new(slack)
 }
 
 func (s *slack) CheckConf() error {
