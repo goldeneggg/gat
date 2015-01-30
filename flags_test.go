@@ -2,7 +2,9 @@ package main_test
 
 import (
 	"testing"
+)
 
+import (
 	. "github.com/goldeneggg/gat"
 )
 

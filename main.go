@@ -5,7 +5,9 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+)
 
+import (
 	"github.com/codegangsta/cli"
 )
 

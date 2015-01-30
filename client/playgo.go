@@ -3,7 +3,9 @@ package client
 import (
 	"fmt"
 	"strings"
+)
 
+import (
 	h "github.com/goldeneggg/gat/client/http"
 )
 

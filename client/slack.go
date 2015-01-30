@@ -5,7 +5,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"regexp"
+)
 
+import (
 	h "github.com/goldeneggg/gat/client/http"
 )
 

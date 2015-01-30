@@ -5,7 +5,9 @@ import (
 	"io/ioutil"
 	"os"
 	"time"
+)
 
+import (
 	"github.com/codegangsta/cli"
 	"github.com/goldeneggg/gat/client"
 )
