@@ -92,7 +92,7 @@ func ExampleRunGistHelp() {
 	// OPTIONS:
 	//    --api-domain 	Github api domain
 	//    --access-token 	Github api access token
-	//    --timeout '0'	Timeout for connection
+	//    --timeout "0"	Timeout for connection
 	//    --description, -d 	A description of the gist
 	//    --public, -p		Indicates whether the gist is public. Default: false
 }
@@ -122,7 +122,7 @@ func ExampleRunSlackHelp() {
 	//    --channel, -c 	Target channel
 	//    --username, -u 	Username
 	//    --icon, -i 		Icon url or emoji format text (:EMOJI_NAME:)
-	//    --timeout '0'	Timeout for connection
+	//    --timeout "0"	Timeout for connection
 	//    --without-markdown	Not format slack's markdown
 	//    --without-unfurl	Not unfurl media links
 	//    --linkfy, -l		Linkify channel names (starting with a '#') and usernames (starting with an '@')
