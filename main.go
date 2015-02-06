@@ -42,7 +42,7 @@ func run(ch chan struct{}) {
 	app.Name = "gat"
 	app.Version = Version
 	app.Usage = "Utility tool of concatnating and printing file to various services"
-	app.Author = "@goldeneggg"
+	app.Author = "goldeneggg"
 	app.Email = "jpshadowapps@gmail.com"
 	app.Flags = GlobalFlags
 	app.Commands = Commands

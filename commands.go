@@ -17,7 +17,7 @@ var (
 	Commands = []cli.Command{
 		cli.Command{
 			Name:  client.NameGist,
-			Usage: "Cat to gist",
+			Usage: "Upload file to gist",
 			Flags: []cli.Flag{
 				cli.StringFlag{
 					Name:  "api-domain",
@@ -44,7 +44,7 @@ var (
 		},
 		cli.Command{
 			Name:  client.NameSlack,
-			Usage: "Cat to slack",
+			Usage: "Send file contents to slack",
 			Flags: []cli.Flag{
 				cli.StringFlag{
 					Name:  "webhook-url",
@@ -83,7 +83,7 @@ var (
 		},
 		cli.Command{
 			Name:   client.NamePlaygo,
-			Usage:  "Cat to play.golang.org",
+			Usage:  "Upload go code to play.golang.org",
 			Action: exec,
 		},
 		/*

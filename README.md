@@ -23,17 +23,16 @@ Target services
 
 ```bash
 NAME:
-   gat - Cat to anywhere
+   gat - Utility tool of concatnating and printing file to various services
 
 USAGE:
-   gat [global options] command [command options] [files...]
-   OTHER_OUTPUT_COMMAND | gat [global options] command [command options]
+   gat [global options] command [command options] [arguments...]
 
 VERSION:
    0.3.0
 
 AUTHOR:
-  @goldeneggg - <jpshadowapps@gmail.com>
+  goldeneggg - <jpshadowapps@gmail.com>
 
 COMMANDS:
    gist         Cat to gist
@@ -55,21 +54,20 @@ GLOBAL OPTIONS:
 ### Supported commands
 
 #### "gist"
-Output to gist
 
 ```bash
 NAME:
-   gist - Cat to gist
+   gist - Upload file to gist
 
 USAGE:
    command gist [command options] [arguments...]
 
 OPTIONS:
-   --api-domain         Github api domain
-   --access-token       Github api access token
-   --timeout '0'        Timeout for connection
-   --description, -d    A description of the gist
-   --public, -p         Indicates whether the gist is public. Default: false
+   --api-domain 	Github api domain
+   --access-token 	Github api access token
+   --timeout "0"	Timeout for connection
+   --description, -d 	A description of the gist
+   --public, -p		Indicates whether the gist is public. Default: false
 ```
 
 * Edit `~/.gat/conf.json`
@@ -92,23 +90,22 @@ OPTIONS:
 ```bash
 ### output file contents to your gist, (default private mode)
 $ gat gist hoge.go
-https://gist.github.com/aaaaaaaaaaaaaaaaaaaa
+https://gist.github.com/164b687d8d7f7cd9083f
 
 
 ### "-p" option switch mode to public
 $ gat gist -p hoge.go
-https://gist.github.com/bbbbbbbbbbbbbbbbbbbb
+https://gist.github.com/164b687d8d7f7cd9083f
 
 
 ### "-d <description>" option add description
 $ gat gist -d "description" hoge.go
-https://gist.github.com/cccccccccccccccccccc
+https://gist.github.com/164b687d8d7f7cd9083f
 
 
 ### output command result to your gist using pipe. filename of this case is "stdin"
 $ sh huga.sh | gat gist
-https://gist.github.com/dddddddddddddddddddd
-
+https://gist.github.com/164b687d8d7f7cd9083f
 ```
 
 *  If you'd like to post to Github Enterprise on your internal network, you should run with another config json for GHE specidied by `-c` global option.
@@ -129,24 +126,23 @@ https://gist.github.com/dddddddddddddddddddd
     ```
 
 #### "slack"
-Output to slack
 
 ```bash
 NAME:
-   slack - Cat to slack
+   slack - Send file contents to slack
 
 USAGE:
    command slack [command options] [arguments...]
 
 OPTIONS:
-   --webhook-url        Webhook URL
-   --channel, -c        Target channel
-   --username, -u       Username
-   --icon, -i           Icon url or emoji format text (:EMOJI_NAME:)
-   --timeout '0'        Timeout for connection
-   --without-markdown   Not format markdown of slack
-   --without-unfurl     Not unfurl media links
-   --linkfy, -l         Linkify channel names (starting with a '#') and usernames (starting with an '@')
+   --webhook-url 	Webhook URL
+   --channel, -c 	Target channel
+   --username, -u 	Username
+   --icon, -i 		Icon url or emoji format text (:EMOJI_NAME:)
+   --timeout "0"	Timeout for connection
+   --without-markdown	Not format slack's markdown
+   --without-unfurl	Not unfurl media links
+   --linkfy, -l		Linkify channel names (starting with a '#') and usernames (starting with an '@')
 ```
 
 * [Setup "Incoming Webhooks" of your team](https://my.slack.com/services/new/incoming-webhook)
@@ -177,26 +173,14 @@ $ echo 'Foo <!everyone> bar http://test.com' | gat slack  # output format is "Fo
 * [Show more information of slack's message formatting](https://api.slack.com/docs/formatting)
 
 #### "playgo"
-Output to play.golang.org
 
 ```bash
+
 NAME:
-   playgo - Cat to play.golang.org
+   playgo - Upload go code to play.golang.org
 
 USAGE:
-  command playgo [arguments...]
-```
-
-* __Not__ need to edit `~/.gat/conf.json`
-* Result of `gat playgo` command is shared URL
-* __Only one .go file is available as argument__
-    * Not .go file will be error.
-    * Multi files will be error.
-* example
-
-```bash
-$ gat playgo hoge.go
-https://play.golang.org/p/2mwrpQe7vq
+   command playgo [arguments...]
 ```
 
 

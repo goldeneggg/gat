@@ -84,7 +84,7 @@ func ExampleRunGistHelp() {
 	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_gist_e_domain.json", "gist", "-h"})
 	// Output:
 	// NAME:
-	//    gist - Cat to gist
+	//    gist - Upload file to gist
 	//
 	// USAGE:
 	//    command gist [command options] [arguments...]
@@ -112,7 +112,7 @@ func ExampleRunSlackHelp() {
 	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_slack_e_domain.json", "slack", "-h"})
 	// Output:
 	// NAME:
-	//    slack - Cat to slack
+	//    slack - Send file contents to slack
 	//
 	// USAGE:
 	//    command slack [command options] [arguments...]
@@ -132,7 +132,7 @@ func ExampleRunPlaygoHelp() {
 	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_slack_e_domain.json", "playgo", "-h"})
 	// Output:
 	// NAME:
-	//    playgo - Cat to play.golang.org
+	//    playgo - Upload go code to play.golang.org
 	//
 	// USAGE:
 	//    command playgo [arguments...]
@@ -143,18 +143,18 @@ func ExampleRunListCommand() {
 	getApp().Run([]string{"", "list"})
 	// Output:
 	// Supported gat commands are:
-	//   gist  - Cat to gist
-	//   slack  - Cat to slack
-	//   playgo  - Cat to play.golang.org
+	//   gist  - Upload file to gist
+	//   slack  - Send file contents to slack
+	//   playgo  - Upload go code to play.golang.org
 }
 
 func ExampleRunListCommandWithInput() {
 	getApp().Run([]string{"", "list", testTextFile})
 	// Output:
 	// Supported gat commands are:
-	//   gist  - Cat to gist
-	//   slack  - Cat to slack
-	//   playgo  - Cat to play.golang.org
+	//   gist  - Upload file to gist
+	//   slack  - Send file contents to slack
+	//   playgo  - Upload go code to play.golang.org
 }
 
 /*
