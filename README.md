@@ -6,6 +6,7 @@ Target services
 * Gist
 * Slack
 * play.golang.org
+* Hipchat
 
 
 ## Getting Started
@@ -36,15 +37,16 @@ USAGE:
    gat [global options] command [command options] [arguments...]
 
 VERSION:
-   0.3.0
+   0.4.0
 
 AUTHOR:
   goldeneggg - <jpshadowapps@gmail.com>
 
 COMMANDS:
-   gist         Cat to gist
-   slack        Cat to slack
-   playgo       Cat to play.golang.org
+   gist         Upload file to gist
+   slack        Send file contents to slack
+   playgo       Upload go code to play.golang.org
+   hipchat      Send file contents to hipchat
    list         Show target service list
    help, h      Shows a list of commands or help for one command
 
@@ -169,7 +171,7 @@ OPTIONS:
 
 ```bash
 ### output file contents to your gist, (default private mode)
-$ gat slack "test slack"
+$ gat slack hoge.txt
 ok
 
 
@@ -188,6 +190,45 @@ NAME:
 
 USAGE:
    command playgo [arguments...]
+```
+
+#### "hipchat"
+
+```bash
+NAME:
+   hipchat - Send file contents to hipchat
+
+USAGE:
+   command hipchat [command options] [arguments...]
+
+OPTIONS:
+   --api-root           API root URL
+   --access-token       Hipchat API access token
+   --room, -r           Target room
+   --color, -c          Message color
+   --notify, -n         Notify
+   --format, -f         Message format
+```
+
+* Edit `~/.gat/conf.json`
+    * All settings are possible overwriting by commandline option (ex. `--api-root`)
+
+    ```json
+    {
+      "hipchat" : {
+        "api-root" : "https://api.hipchat.com/v2",
+        "access-token" : "YOUR_ACCESS_TOKEN"
+      }
+    }
+    ```
+
+* Result of `gat hipchat` command is `ok` or error message.
+* example
+
+```bash
+### output file contents to your gist, (default private mode)
+$ gat hipchat hoge.txt
+ok
 ```
 
 
