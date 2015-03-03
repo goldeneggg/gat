@@ -86,6 +86,37 @@ var (
 			Usage:  "Upload go code to play.golang.org",
 			Action: exec,
 		},
+		cli.Command{
+			Name:  client.NameHipchat,
+			Usage: "Send file contents to hipchat",
+			Flags: []cli.Flag{
+				cli.StringFlag{
+					Name:  "api-root",
+					Usage: "API root URL",
+				},
+				cli.StringFlag{
+					Name:  "access-token",
+					Usage: "Hipchat API access token",
+				},
+				cli.StringFlag{
+					Name:  "room, r",
+					Usage: "Target room",
+				},
+				cli.StringFlag{
+					Name:  "color, c",
+					Usage: "Message color",
+				},
+				cli.BoolFlag{
+					Name:  "notify, n",
+					Usage: "Notify",
+				},
+				cli.StringFlag{
+					Name:  "format, f",
+					Usage: "Message format",
+				},
+			},
+			Action: exec,
+		},
 		/*
 			cli.Command{
 				Name:  client.NameOscat,
