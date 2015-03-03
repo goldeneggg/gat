@@ -1,0 +1,6 @@
+{
+  "hipchat" : {
+    "api-root" : "https://hoge/huga"
+    "access-token" : ""
+  }
+}
