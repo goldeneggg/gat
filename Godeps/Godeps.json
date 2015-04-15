@@ -7,8 +7,8 @@
 	"Deps": [
 		{
 			"ImportPath": "github.com/codegangsta/cli",
-			"Comment": "1.2.0-66-g6086d79",
-			"Rev": "6086d7927ec35315964d9fea46df6c04e6d697c1"
+			"Comment": "1.2.0-74-g50c77ec",
+			"Rev": "50c77ecec0068c9aef9d90ae0fd0fdf410041da3"
 		}
 	]
 }
