@@ -96,6 +96,7 @@ func (hc *hipchat) postHipchat(files map[string][]byte) (string, error) {
 		return "", err
 	}
 
+	// Note: send_room_notification API will return "204 No content"
 	return string(respBody), nil
 }
 
