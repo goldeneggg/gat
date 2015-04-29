@@ -35,13 +35,13 @@ func ExampleHelp() {
 func ExampleVersion() {
 	getApp().Run([]string{"", "-v"})
 	// Output:
-	// gatTest version 0.3.0
+	// gatTest version 0.4.0
 }
 
 func ExampleVersionRunningCommand() {
 	getApp().Run([]string{"", "-v", "gist", testTextFile})
 	// Output:
-	// gatTest version 0.3.0
+	// gatTest version 0.4.0
 }
 
 // "gist" Command
@@ -128,6 +128,40 @@ func ExampleRunSlackHelp() {
 	//    --linkfy, -l		Linkify channel names (starting with a '#') and usernames (starting with an '@')
 }
 
+// "hipchat" command
+func ExampleRunHipchatEmptyRoot() {
+	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_hipchat_e_domain.json", "hipchat", testTextFile})
+	// Output:
+}
+
+func ExampleRunHipchatNullRoot() {
+	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_hipchat_null_domain.json", "hipchat", testTextFile})
+	// Output:
+}
+
+func ExampleRunHipchatEmptyToken() {
+	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_hipchat_e_token.json", "hipchat", testTextFile})
+	// Output:
+}
+
+func ExampleRunHipchatHelp() {
+	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_hipchat_e_domain.json", "hipchat", "-h"})
+	// Output:
+	// NAME:
+	//    hipchat - Send file contents to hipchat
+	//
+	// USAGE:
+	//    command hipchat [command options] [arguments...]
+	//
+	// OPTIONS:
+	//    --api-root 		API root URL
+	//    --access-token 	Hipchat API access token
+	//    --room, -r 		Target room
+	//    --color, -c 		Message color
+	//    --notify, -n		Notify
+	//    --format, -f 	Message format
+}
+
 func ExampleRunPlaygoHelp() {
 	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_slack_e_domain.json", "playgo", "-h"})
 	// Output:
@@ -146,6 +180,7 @@ func ExampleRunListCommand() {
 	//   gist  - Upload file to gist
 	//   slack  - Send file contents to slack
 	//   playgo  - Upload go code to play.golang.org
+	//   hipchat  - Send file contents to hipchat
 }
 
 func ExampleRunListCommandWithInput() {
@@ -155,6 +190,7 @@ func ExampleRunListCommandWithInput() {
 	//   gist  - Upload file to gist
 	//   slack  - Send file contents to slack
 	//   playgo  - Upload go code to play.golang.org
+	//   hipchat  - Send file contents to hipchat
 }
 
 /*
