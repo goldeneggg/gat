@@ -152,11 +152,6 @@ func exec(c *cli.Context) {
 	start := time.Now()
 	client.L.Debug("START")
 
-	defer func() {
-		elapsed := time.Since(start)
-		client.L.Debug("END. elapsed: ", elapsed)
-	}()
-
 	attr := client.Attr{
 		Name:       c.Command.Name,
 		ConfPath:   c.GlobalString("confpath"),
@@ -184,7 +179,10 @@ func exec(c *cli.Context) {
 		return
 	}
 
-	fmt.Fprintf(os.Stdout, "%s", res)
+	elapsed := time.Since(start)
+	client.L.Debug("END. elapsed: ", elapsed)
+
+	fmt.Fprintf(os.Stdout, "%s\n", res)
 }
 
 func flags2map(c *cli.Context) map[string]interface{} {
