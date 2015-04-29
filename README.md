@@ -107,7 +107,7 @@ Send your file contents to slack as message
     ```json
     {
       "gist" : {
-        ...
+        ---
       },
       "slack" : {
         "webhook-url" : `https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX`
@@ -157,7 +157,7 @@ Send your file contents to hipchat as message
     ```json
     {
       "gist" : {
-        ...
+        ---
       },
       "hipchat" : {
         "api-root" : "https://api.hipchat.com/v2",
