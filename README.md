@@ -29,72 +29,33 @@ $ brew install gat
 
 ## Usage
 
-```bash
-NAME:
-   gat - Utility tool of concatnating and printing file to various services
-
-USAGE:
-   gat [global options] command [command options] [arguments...]
-
-VERSION:
-   0.4.0
-
-AUTHOR:
-  goldeneggg - <jpshadowapps@gmail.com>
-
-COMMANDS:
-   gist         Upload file to gist
-   slack        Send file contents to slack
-   playgo       Upload go code to play.golang.org
-   hipchat      Send file contents to hipchat
-   list         Show target service list
-   help, h      Shows a list of commands or help for one command
-
-GLOBAL OPTIONS:
-   --confpath, -c       Your original config json path
-   --debug, -d          Debug detail information
-   --help, -h           show help
-   --version, -v        print the version
-```
-
-* Put your setting file at `~/.gat/conf.json` (or indicated path by `-c` global option)
+* If you'd like to read usage, type `gat` on your terminal.
+* Put your setting file at __`~/.gat/conf.json`__ (or indicated path by `-c` global option).
 
 
 ### Supported commands
 
-#### "gist"
+#### `gat gist FILE`
+Upload your file to gist
 
-```bash
-NAME:
-   gist - Upload file to gist
-
-USAGE:
-   command gist [command options] [arguments...]
-
-OPTIONS:
-   --api-domain 	Github api domain
-   --access-token 	Github api access token
-   --timeout "0"	Timeout for connection
-   --description, -d 	A description of the gist
-   --public, -p		Indicates whether the gist is public. Default: false
-```
-
-* Edit `~/.gat/conf.json`
-    * All settings are possible overwriting by commandline option (ex. `--access-token`)
+* Edit `~/.gat/conf.json`, and write `gist` key, `api-domain` and `access-token`
 
     ```json
     {
       "gist" : {
         "api-domain" : "https://api.github.com",
-        "access-token" : "YOUR_GITHUB_TOKEN",
-        "timeout" : 10,
+        "access-token" : "YOUR_GITHUB_TOKEN"
       }
     }
     ```
 
-* Result of `gat gist` command is __auto generated gist URL (ex. `https://gist.github.com/goldeneggg/4727d6c712dc6f3528f3`)
+    * (All settings are possible overwriting by commandline option (ex. `--access-token`))
 
-* examples
+* Result of `gat gist FILE` command is __auto generated gist URL (ex. `https://gist.github.com/goldeneggg/4727d6c712dc6f3528f3`)__
+* Do you want to read more information? type `gat help gist` on your terminal.
+
+
+##### examples
 
 ```bash
 ### output file contents to your gist, (default private mode)
@@ -134,43 +95,35 @@ https://gist.github.com/164b687d8d7f7cd9083f
     https://YOUR_GHE_DOMAIN/xxxxxxxxxxxxxxxxxxx
     ```
 
-#### "slack"
 
-```bash
-NAME:
-   slack - Send file contents to slack
+#### `gat slack FILE`
+Send your file contents to slack as message
 
-USAGE:
-   command slack [command options] [arguments...]
-
-OPTIONS:
-   --webhook-url 	Webhook URL
-   --channel, -c 	Target channel
-   --username, -u 	Username
-   --icon, -i 		Icon url or emoji format text (:EMOJI_NAME:)
-   --timeout "0"	Timeout for connection
-   --without-markdown	Not format slack's markdown
-   --without-unfurl	Not unfurl media links
-   --linkfy, -l		Linkify channel names (starting with a '#') and usernames (starting with an '@')
-```
-
-* [Setup "Incoming Webhooks" of your team](https://my.slack.com/services/new/incoming-webhook)
-* Edit `~/.gat/conf.json`
-    * All settings are possible overwriting by commandline option (ex. `--webhook-url`)
+* You need to add "incoming webhook" integration on `https://YOURTEAM.slack.com/services`
+    * And get your incoming webhook URL on `https://YOURTEAM.slack.com/services/INTEGRATION_ID#service_setup`
+        * like `https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX`
+* Edit `~/.gat/conf.json`, and write `slack` key and `webhook-url`
 
     ```json
     {
+      "gist" : {
+        ...
+      },
       "slack" : {
-        "webhook-url" : "YOUR_WEBHOOK_URL"
+        "webhook-url" : `https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX`
       }
     }
     ```
 
 * Result of `gat slack` command is `ok` or error message.
-* example
+* If you'd like to format message, use `--icon`, `--without-markdown` or other option.
+    * You can read more information if type `gat help slack` on your terminal.
+    * [Show more information of slack's message formatting](https://api.slack.com/docs/formatting)
+
+##### examples
 
 ```bash
-### output file contents to your gist, (default private mode)
+### output file contents to your slack room
 $ gat slack hoge.txt
 ok
 
@@ -179,42 +132,33 @@ ok
 $ echo 'Foo <!everyone> bar http://test.com' | gat slack  # output format is "Foo <!everyone> bar <http://test.com>"
 ```
 
-* [Show more information of slack's message formatting](https://api.slack.com/docs/formatting)
 
-#### "playgo"
+#### `gat playgo GOLANG_SOURCE_FILE`
+Upload your golang source file to playgo.org
 
-```bash
+* You don't need to edit `~/.gat/conf.json`
+* Result of `gat playgo GOLANG_SOURCE_FILE` command is __auto generated playgo.org URL (ex. `https://play.golang.org/p/BrhRIGnmEY`)__
+* Do you want to read more information? type `gat help playgo` on your terminal.
 
-NAME:
-   playgo - Upload go code to play.golang.org
-
-USAGE:
-   command playgo [arguments...]
-```
-
-#### "hipchat"
+##### examples
 
 ```bash
-NAME:
-   hipchat - Send file contents to hipchat
-
-USAGE:
-   command hipchat [command options] [arguments...]
-
-OPTIONS:
-   --api-root           API root URL
-   --access-token       Hipchat API access token
-   --room, -r           Target room
-   --color, -c          Message color
-   --notify, -n         Notify
-   --format, -f         Message format
+$ gat playgo main.go
+https://play.golang.org/p/BrhRIGnmEY
 ```
 
-* Edit `~/.gat/conf.json`
-    * All settings are possible overwriting by commandline option (ex. `--api-root`)
+
+#### `gat hipchat -r ROOMID FILE`
+Send your file contents to hipchat as message
+
+* You need to confirm your access token for hipchat API.
+* Edit `~/.gat/conf.json`, and write `hipchat` key, `api-root` and `access-token`
 
     ```json
     {
+      "gist" : {
+        ...
+      },
       "hipchat" : {
         "api-root" : "https://api.hipchat.com/v2",
         "access-token" : "YOUR_ACCESS_TOKEN"
@@ -222,27 +166,23 @@ OPTIONS:
     }
     ```
 
-* Result of `gat hipchat` command is `ok` or error message.
-* example
+    * (All settings are possible overwriting by commandline option (ex. `--access-token`))
+
+* You need to use `-r ROOMID` option for sending message.
+* Do you want to read more information? type `gat help hipchat` on your terminal.
+
+##### examples
 
 ```bash
-### output file contents to your gist, (default private mode)
-$ gat hipchat hoge.txt
-ok
+### output file contents to your hipchat room
+$ gat hipchat -r YOUR_ROOM_ID hoge.txt
 ```
 
 
 ### Confirm supported service list
 
-* `list` command
+* Use `gat list` command
 
-```
-$ gat list
-
-gist  - Cat to gist
-slack  - Cat to slack
-playgo  - Cat to play.golang.org
-```
 
 ### Run debug mode
 
