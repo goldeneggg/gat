@@ -99,6 +99,7 @@ func (hc *hipchat) postHipchat(files map[string][]byte) (string, error) {
 	return string(respBody), nil
 }
 
+// https://www.hipchat.com/docs/apiv2/method/send_room_notification
 type hipchatPayload struct {
 	Message       string `json:"message"`
 	Color         string `json:"color,omitempty"`

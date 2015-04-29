@@ -87,6 +87,9 @@ func (s *slack) postSlack(files map[string][]byte) (string, error) {
 	return string(respBody), nil
 }
 
+// https://api.slack.com/docs/formatting
+// https://api.slack.com/docs/attachments
+// https://api.slack.com/docs/unfurling
 type slackPayload struct {
 	Text        string `json:"text"`
 	UserName    string `json:"username,omitempty"`
