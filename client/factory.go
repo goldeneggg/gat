@@ -12,7 +12,7 @@ const (
 )
 
 var (
-	errFactoryName = func(n string) error { return fmt.Errorf("invalid name: %d", n) }
+	errFactoryName = func(n string) error { return fmt.Errorf("invalid name: %s", n) }
 )
 
 // Attr represents the configuration for NewClient
@@ -41,6 +41,8 @@ func NewClient(attr Attr) (Client, error) {
 		clnt = newSlack()
 	case NamePlaygo:
 		clnt = newPlaygo()
+	case NameHipchat:
+		clnt = newHipchat()
 	default:
 		return clnt, errFactoryName(name)
 	}
