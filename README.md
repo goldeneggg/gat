@@ -5,8 +5,8 @@ __gat__ is utility tool of concatnating and printing file to various services.
 Target services
 * Gist
 * Slack
-* play.golang.org
 * Hipchat
+* play.golang.org
 
 
 ## Getting Started
@@ -107,10 +107,10 @@ Send your file contents to slack as message
     ```json
     {
       "gist" : {
-        ---
+
       },
       "slack" : {
-        "webhook-url" : `https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX`
+        "webhook-url" : "https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX"
       }
     }
     ```
@@ -133,21 +133,6 @@ $ echo 'Foo <!everyone> bar http://test.com' | gat slack  # output format is "Fo
 ```
 
 
-#### `gat playgo GOLANG_SOURCE_FILE`
-Upload your golang source file to playgo.org
-
-* You don't need to edit `~/.gat/conf.json`
-* Result of `gat playgo GOLANG_SOURCE_FILE` command is __auto generated playgo.org URL (ex. `https://play.golang.org/p/BrhRIGnmEY`)__
-* Do you want to read more information? type `gat help playgo` on your terminal.
-
-##### examples
-
-```bash
-$ gat playgo main.go
-https://play.golang.org/p/BrhRIGnmEY
-```
-
-
 #### `gat hipchat -r ROOMID FILE`
 Send your file contents to hipchat as message
 
@@ -157,7 +142,7 @@ Send your file contents to hipchat as message
     ```json
     {
       "gist" : {
-        ---
+
       },
       "hipchat" : {
         "api-root" : "https://api.hipchat.com/v2",
@@ -178,15 +163,19 @@ Send your file contents to hipchat as message
 $ gat hipchat -r YOUR_ROOM_ID hoge.txt
 ```
 
+#### `gat playgo GOLANG_SOURCE_FILE`
+Upload your golang source file to playgo.org
 
-### Confirm supported service list
+* You don't need to edit `~/.gat/conf.json`
+* Result of `gat playgo GOLANG_SOURCE_FILE` command is __auto generated playgo.org URL (ex. `https://play.golang.org/p/BrhRIGnmEY`)__
+* Do you want to read more information? type `gat help playgo` on your terminal.
 
-* Use `gat list` command
+##### examples
 
-
-### Run debug mode
-
-* You can specify debug flag by `-d` `--debug`
+```bash
+$ gat playgo main.go
+https://play.golang.org/p/BrhRIGnmEY
+```
 
 
 ## Contact
