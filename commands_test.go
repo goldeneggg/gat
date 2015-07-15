@@ -126,6 +126,7 @@ func ExampleRunSlackHelp() {
 	//    --without-markdown	Not format slack's markdown
 	//    --without-unfurl	Not unfurl media links
 	//    --linkfy, -l		Linkify channel names (starting with a '#') and usernames (starting with an '@')
+	//    --color 		Color name or any hex color code
 }
 
 // "hipchat" command
