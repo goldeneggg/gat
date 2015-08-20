@@ -35,13 +35,13 @@ func ExampleHelp() {
 func ExampleVersion() {
 	getApp().Run([]string{"", "-v"})
 	// Output:
-	// gatTest version 0.4.0
+	// gatTest version 0.5.0
 }
 
 func ExampleVersionRunningCommand() {
 	getApp().Run([]string{"", "-v", "gist", testTextFile})
 	// Output:
-	// gatTest version 0.4.0
+	// gatTest version 0.5.0
 }
 
 // "gist" Command
