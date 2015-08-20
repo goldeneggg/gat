@@ -13,3 +13,5 @@ before_install:
 
 script:
 - godep go test -race -v ./...
+
+sudo: false
