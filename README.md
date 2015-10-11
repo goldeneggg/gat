@@ -184,7 +184,7 @@ https://play.golang.org/p/BrhRIGnmEY
 
 
 ## ChangeLog
-[CHANGELOG](CHANGELOG) file for details.
+[CHANGELOG.md](CHANGELOG.md) file for details.
 
 
 ## License
