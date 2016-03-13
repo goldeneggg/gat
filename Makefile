@@ -4,7 +4,6 @@ GOLINT ?= golint
 BINNAME := gat
 PGMPKGPATH := .
 TESTTARGET := ./...
-SAVETARGET := ./...
 PROFDIR := ./.profile
 PROFTARGET := ./client
 LINTTARGET := ./...
@@ -21,7 +20,7 @@ depvet: depsave
 	$(GODEP) $(GO) vet -n $(TESTTARGET)
 
 depsave:
-	$(GODEP) save $(SAVETARGET)
+	$(GODEP) save
 
 proftest:
 	[ ! -d $(PROFDIR) ] && mkdir $(PROFDIR); $(GO) test -bench . -benchmem -blockprofile $(PROFDIR)/block.out -cover -coverprofile $(PROFDIR)/cover.out -cpuprofile $(PROFDIR)/cpu.out -memprofile $(PROFDIR)/mem.out $(PROFTARGET)

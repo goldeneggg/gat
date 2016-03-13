@@ -1,9 +1,6 @@
 {
 	"ImportPath": "github.com/goldeneggg/gat",
-	"GoVersion": "go1.5",
-	"Packages": [
-		"./..."
-	],
+	"GoVersion": "go1.6",
 	"Deps": [
 		{
 			"ImportPath": "github.com/codegangsta/cli",

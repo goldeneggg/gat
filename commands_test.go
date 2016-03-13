@@ -32,18 +32,6 @@ func ExampleHelp() {
 	getApp().Run([]string{"", "-h"})
 }
 
-func ExampleVersion() {
-	getApp().Run([]string{"", "-v"})
-	// Output:
-	// gatTest version 0.5.0
-}
-
-func ExampleVersionRunningCommand() {
-	getApp().Run([]string{"", "-v", "gist", testTextFile})
-	// Output:
-	// gatTest version 0.5.0
-}
-
 // "gist" Command
 func ExampleRunGistEmptyConf() {
 	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_empty.json", "gist", testTextFile})
@@ -80,23 +68,6 @@ func ExampleRunGistNotFound() {
 	// Output:
 }
 
-func ExampleRunGistHelp() {
-	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_gist_e_domain.json", "gist", "-h"})
-	// Output:
-	// NAME:
-	//    gist - Upload file to gist
-	//
-	// USAGE:
-	//    command gist [command options] [arguments...]
-	//
-	// OPTIONS:
-	//    --api-domain 	Github api domain
-	//    --access-token 	Github api access token
-	//    --timeout "0"	Timeout for connection
-	//    --description, -d 	A description of the gist
-	//    --public, -p		Indicates whether the gist is public. Default: false
-}
-
 // "slack" command
 func ExampleRunSlackEmptyUrl() {
 	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_slack_e_domain.json", "slack", testTextFile})
@@ -106,27 +77,6 @@ func ExampleRunSlackEmptyUrl() {
 func ExampleRunSlackNullUrl() {
 	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_slack_null_domain.json", "slack", testTextFile})
 	// Output:
-}
-
-func ExampleRunSlackHelp() {
-	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_slack_e_domain.json", "slack", "-h"})
-	// Output:
-	// NAME:
-	//    slack - Send file contents to slack
-	//
-	// USAGE:
-	//    command slack [command options] [arguments...]
-	//
-	// OPTIONS:
-	//    --webhook-url 	Webhook URL
-	//    --channel, -c 	Target channel
-	//    --username, -u 	Username
-	//    --icon, -i 		Icon url or emoji format text (:EMOJI_NAME:)
-	//    --timeout "0"	Timeout for connection
-	//    --without-markdown	Not format slack's markdown
-	//    --without-unfurl	Not unfurl media links
-	//    --linkfy, -l		Linkify channel names (starting with a '#') and usernames (starting with an '@')
-	//    --color 		Color name or any hex color code
 }
 
 // "hipchat" command
@@ -143,55 +93,6 @@ func ExampleRunHipchatNullRoot() {
 func ExampleRunHipchatEmptyToken() {
 	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_hipchat_e_token.json", "hipchat", testTextFile})
 	// Output:
-}
-
-func ExampleRunHipchatHelp() {
-	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_hipchat_e_domain.json", "hipchat", "-h"})
-	// Output:
-	// NAME:
-	//    hipchat - Send file contents to hipchat
-	//
-	// USAGE:
-	//    command hipchat [command options] [arguments...]
-	//
-	// OPTIONS:
-	//    --api-root 		API root URL
-	//    --access-token 	Hipchat API access token
-	//    --room, -r 		Target room
-	//    --color, -c 		Message color
-	//    --notify, -n		Notify
-	//    --format, -f 	Message format
-}
-
-func ExampleRunPlaygoHelp() {
-	getApp().Run([]string{"", "-c", testCommandsDir + "/test_conf_slack_e_domain.json", "playgo", "-h"})
-	// Output:
-	// NAME:
-	//    playgo - Upload go code to play.golang.org
-	//
-	// USAGE:
-	//    command playgo [arguments...]
-}
-
-// "list" Command
-func ExampleRunListCommand() {
-	getApp().Run([]string{"", "list"})
-	// Output:
-	// Supported gat commands are:
-	//   gist  - Upload file to gist
-	//   slack  - Send file contents to slack
-	//   playgo  - Upload go code to play.golang.org
-	//   hipchat  - Send file contents to hipchat
-}
-
-func ExampleRunListCommandWithInput() {
-	getApp().Run([]string{"", "list", testTextFile})
-	// Output:
-	// Supported gat commands are:
-	//   gist  - Upload file to gist
-	//   slack  - Send file contents to slack
-	//   playgo  - Upload go code to play.golang.org
-	//   hipchat  - Send file contents to hipchat
 }
 
 /*
@@ -278,19 +179,6 @@ func ExampleRunOsNoTarget() {
 	//
 }
 */
-
-// abnormal cases
-func ExampleInvalidCommand() {
-	getApp().Run([]string{"", "invalid", testTextFile})
-	// Output:
-	// No help topic for 'invalid'
-}
-
-func ExampleEmptyCommand() {
-	getApp().Run([]string{"", testTextFile})
-	// Output:
-	// No help topic for './test/commands_test/test.txt'
-}
 
 func ExampleNotExistFile() {
 	getApp().Run([]string{"", "gist", testCommandsDir + "/notexist.txt"})
