@@ -78,6 +78,10 @@ var (
 					Name:  "linkfy, l",
 					Usage: "Linkify channel names (starting with a '#') and usernames (starting with an '@')",
 				},
+				cli.StringFlag{
+					Name:  "color",
+					Usage: "Color name or any hex color code",
+				},
 			},
 			Action: exec,
 		},

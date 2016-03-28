@@ -34,6 +34,7 @@ type slack struct {
 	WithoutMarkdown bool   `json:"without-markdown"`
 	WithoutUnfURL   bool   `json:"without-unfurl"`
 	Linkfy          bool   `json:"linkfy"`
+	Color           string `json:"color"`
 }
 
 func newSlack() *slack {
@@ -99,6 +100,7 @@ type slackPayload struct {
 	Mrkdwn      bool   `json:"mrkdwn"`
 	UnfurlLinks bool   `json:"unfurl_links"`
 	LinkNames   int    `json:"link_names,omitempty"`
+	Color       string `json:"color,omitempty"`
 }
 
 func (s *slack) getPayload(content []byte) ([]byte, error) {
@@ -108,6 +110,7 @@ func (s *slack) getPayload(content []byte) ([]byte, error) {
 		Channel:     s.Channel,
 		Mrkdwn:      !s.WithoutMarkdown,
 		UnfurlLinks: !s.WithoutUnfURL,
+		Color:       s.Color,
 	}
 
 	matched, err := regexp.MatchString(":[^:]+:", s.Icon)
