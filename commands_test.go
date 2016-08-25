@@ -1,7 +1,7 @@
 package main_test
 
 import (
-	"github.com/codegangsta/cli"
+	"github.com/urfave/cli"
 
 	. "github.com/goldeneggg/gat"
 )

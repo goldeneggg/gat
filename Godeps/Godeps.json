@@ -1,11 +1,11 @@
 {
 	"ImportPath": "github.com/goldeneggg/gat",
-	"GoVersion": "go1.6",
+	"GoVersion": "go1.7",
 	"Deps": [
 		{
-			"ImportPath": "github.com/codegangsta/cli",
-			"Comment": "1.2.0-74-g50c77ec",
-			"Rev": "50c77ecec0068c9aef9d90ae0fd0fdf410041da3"
+			"ImportPath": "github.com/urfave/cli",
+			"Comment": "v1.18.0-53-g05fe449",
+			"Rev": "05fe449c81eb7305a34e9253c321c960a1c5e057"
 		}
 	]
 }
