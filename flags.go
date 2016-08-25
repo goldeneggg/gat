@@ -1,6 +1,6 @@
 package main
 
-import "github.com/codegangsta/cli"
+import "github.com/urfave/cli"
 
 // GlobalFlags are flags of gat command
 var GlobalFlags = []cli.Flag{

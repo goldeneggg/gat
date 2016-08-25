@@ -12,7 +12,13 @@ const (
 )
 
 var (
-	errFactoryName = func(n string) error { return fmt.Errorf("invalid name: %s", n) }
+	errConfJSON = func(path string, orgError error) error {
+		return fmt.Errorf("conf json %s is invalid: %v", path, orgError)
+	}
+	errCheckConf = func(clnt Client, orgError error) error {
+		return fmt.Errorf("%v conf includes invalid setting: %v", clnt, orgError)
+	}
+	errFactoryName = func(name string) error { return fmt.Errorf("invalid name: %s", name) }
 )
 
 // Attr represents the configuration for NewClient
@@ -53,11 +59,11 @@ func NewClient(attr Attr) (Client, error) {
 	}
 
 	if err := configure(name, confPath, attr.Overwrites, clnt); err != nil {
-		return clnt, err
+		return clnt, errConfJSON(confPath, err)
 	}
 
 	if err := clnt.CheckConf(); err != nil {
-		return clnt, err
+		return clnt, errCheckConf(clnt, err)
 	}
 
 	return clnt, nil

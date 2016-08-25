@@ -8,8 +8,8 @@ import (
 )
 
 import (
-	"github.com/codegangsta/cli"
 	"github.com/goldeneggg/gat/client"
+	"github.com/urfave/cli"
 )
 
 // Commands are executable commands.
@@ -157,6 +157,7 @@ func exec(c *cli.Context) {
 		ConfPath:   c.GlobalString("confpath"),
 		Overwrites: flags2map(c),
 	}
+	client.L.DebugF("attr: %v", attr)
 
 	clnt, errN := client.NewClient(attr)
 	if errN != nil {
@@ -164,12 +165,16 @@ func exec(c *cli.Context) {
 		exitSts = 1
 		return
 	}
+	client.L.DebugF("clnt: %v", clnt)
 
 	catInf, errB := buildCatInfo(c)
 	if errB != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", errB)
 		exitSts = 1
 		return
+	}
+	for k := range catInf.Files {
+		client.L.DebugF("catInf files: %v", k)
 	}
 
 	res, errC := clnt.Cat(catInf)
@@ -178,6 +183,7 @@ func exec(c *cli.Context) {
 		exitSts = 1
 		return
 	}
+	client.L.DebugF("res: %v", res)
 
 	elapsed := time.Since(start)
 	client.L.Debug("END. elapsed: ", elapsed)
