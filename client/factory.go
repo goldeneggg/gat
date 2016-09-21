@@ -15,8 +15,8 @@ var (
 	errConfJSON = func(path string, orgError error) error {
 		return fmt.Errorf("conf json %s is invalid: %v", path, orgError)
 	}
-	errCheckConf = func(clnt Client, orgError error) error {
-		return fmt.Errorf("%v conf includes invalid setting: %v", clnt, orgError)
+	errCheckConf = func(client Client, orgError error) error {
+		return fmt.Errorf("%v conf includes invalid setting: %v", client, orgError)
 	}
 	errFactoryName = func(name string) error { return fmt.Errorf("invalid name: %s", name) }
 )
@@ -35,22 +35,22 @@ type Attr struct {
 
 // NewClient returns a new Client,
 func NewClient(attr Attr) (Client, error) {
-	var clnt Client
+	var client Client
 
 	name := attr.Name
 	switch name {
 	case NameOscat:
-		clnt = newOs()
+		client = newOs()
 	case NameGist:
-		clnt = newGist()
+		client = newGist()
 	case NameSlack:
-		clnt = newSlack()
+		client = newSlack()
 	case NamePlaygo:
-		clnt = newPlaygo()
+		client = newPlaygo()
 	case NameHipchat:
-		clnt = newHipchat()
+		client = newHipchat()
 	default:
-		return clnt, errFactoryName(name)
+		return client, errFactoryName(name)
 	}
 
 	confPath := os.Getenv("HOME") + "/" + configPath
@@ -58,15 +58,15 @@ func NewClient(attr Attr) (Client, error) {
 		confPath = attr.ConfPath
 	}
 
-	if err := configure(name, confPath, attr.Overwrites, clnt); err != nil {
-		return clnt, errConfJSON(confPath, err)
+	if err := configure(name, confPath, attr.Overwrites, client); err != nil {
+		return client, errConfJSON(confPath, err)
 	}
 
-	if err := clnt.CheckConf(); err != nil {
-		return clnt, errCheckConf(clnt, err)
+	if err := client.CheckConf(); err != nil {
+		return client, errCheckConf(client, err)
 	}
 
-	return clnt, nil
+	return client, nil
 }
 
 func configure(name string, confPath string, ows map[string]interface{}, client interface{}) error {

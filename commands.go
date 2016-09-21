@@ -8,81 +8,26 @@ import (
 )
 
 import (
-	"github.com/goldeneggg/gat/client"
 	"github.com/urfave/cli"
+)
+
+import (
+	"github.com/goldeneggg/gat/client"
 )
 
 // Commands are executable commands.
 var (
 	Commands = []cli.Command{
 		cli.Command{
-			Name:  client.NameGist,
-			Usage: "Upload file to gist",
-			Flags: []cli.Flag{
-				cli.StringFlag{
-					Name:  "api-domain",
-					Usage: "Github api domain",
-				},
-				cli.StringFlag{
-					Name:  "access-token",
-					Usage: "Github api access token",
-				},
-				cli.IntFlag{
-					Name:  "timeout",
-					Usage: "Timeout for connection",
-				},
-				cli.StringFlag{
-					Name:  "description, d",
-					Usage: "A description of the gist",
-				},
-				cli.BoolFlag{
-					Name:  "public, p",
-					Usage: "Indicates whether the gist is public. Default: false",
-				},
-			},
+			Name:   client.NameGist,
+			Usage:  "Upload file to gist",
+			Flags:  GistFlags,
 			Action: exec,
 		},
 		cli.Command{
-			Name:  client.NameSlack,
-			Usage: "Send file contents to slack",
-			Flags: []cli.Flag{
-				cli.StringFlag{
-					Name:  "webhook-url",
-					Usage: "Webhook URL",
-				},
-				cli.StringFlag{
-					Name:  "channel, c",
-					Usage: "Target channel",
-				},
-				cli.StringFlag{
-					Name:  "username, u",
-					Usage: "Username",
-				},
-				cli.StringFlag{
-					Name:  "icon, i",
-					Usage: "Icon url or emoji format text (:EMOJI_NAME:)",
-				},
-				cli.IntFlag{
-					Name:  "timeout",
-					Usage: "Timeout for connection",
-				},
-				cli.BoolFlag{
-					Name:  "without-markdown",
-					Usage: "Not format slack's markdown",
-				},
-				cli.BoolFlag{
-					Name:  "without-unfurl",
-					Usage: "Not unfurl media links",
-				},
-				cli.BoolFlag{
-					Name:  "linkfy, l",
-					Usage: "Linkify channel names (starting with a '#') and usernames (starting with an '@')",
-				},
-				cli.StringFlag{
-					Name:  "color",
-					Usage: "Color name or any hex color code",
-				},
-			},
+			Name:   client.NameSlack,
+			Usage:  "Send file contents to slack",
+			Flags:  SlackFlags,
 			Action: exec,
 		},
 		cli.Command{
@@ -91,34 +36,9 @@ var (
 			Action: exec,
 		},
 		cli.Command{
-			Name:  client.NameHipchat,
-			Usage: "Send file contents to hipchat",
-			Flags: []cli.Flag{
-				cli.StringFlag{
-					Name:  "api-root",
-					Usage: "API root URL",
-				},
-				cli.StringFlag{
-					Name:  "access-token",
-					Usage: "Hipchat API access token",
-				},
-				cli.StringFlag{
-					Name:  "room, r",
-					Usage: "Target room",
-				},
-				cli.StringFlag{
-					Name:  "color, c",
-					Usage: "Message color",
-				},
-				cli.BoolFlag{
-					Name:  "notify, n",
-					Usage: "Notify",
-				},
-				cli.StringFlag{
-					Name:  "format, f",
-					Usage: "Message format",
-				},
-			},
+			Name:   client.NameHipchat,
+			Usage:  "Send file contents to hipchat",
+			Flags:  HipchatFlags,
 			Action: exec,
 		},
 		/*

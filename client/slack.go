@@ -5,9 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"regexp"
-)
 
-import (
 	h "github.com/goldeneggg/gat/client/http"
 )
 
@@ -35,6 +33,7 @@ type slack struct {
 	WithoutUnfURL   bool   `json:"without-unfurl"`
 	Linkfy          bool   `json:"linkfy"`
 	Color           string `json:"color"`
+	APIToken        string `json:"api-token"`
 }
 
 func newSlack() *slack {
@@ -54,7 +53,9 @@ func (s *slack) CheckConf() error {
 }
 
 func (s *slack) Cat(catInf *CatInfo) (string, error) {
-	res, err := s.postSlack(catInf.Files)
+	// migrated to web API
+	//res, err := s.postSlack(catInf.Files)
+	res, err := s.filesUpload(catInf.Files)
 	if err != nil {
 		return "", err
 	}
@@ -63,10 +64,7 @@ func (s *slack) Cat(catInf *CatInfo) (string, error) {
 }
 
 func (s *slack) postSlack(files map[string][]byte) (string, error) {
-	content := make([]byte, 0, 128)
-	for _, in := range files {
-		content = bytes.Join([][]byte{content, in}, []byte(""))
-	}
+	content := filesToSlackContent(files)
 
 	pl, err := s.getPayload(content)
 	if err != nil {
@@ -86,6 +84,15 @@ func (s *slack) postSlack(files map[string][]byte) (string, error) {
 	}
 
 	return string(respBody), nil
+}
+
+func filesToSlackContent(files map[string][]byte) []byte {
+	content := make([]byte, 0, 128)
+	for _, in := range files {
+		content = bytes.Join([][]byte{content, in}, []byte(""))
+	}
+
+	return content
 }
 
 // https://api.slack.com/docs/formatting
