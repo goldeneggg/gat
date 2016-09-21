@@ -5,7 +5,8 @@
     "Xtimeout" : 5
   },
   "slack" : {
-    "webhook-url" : "https://webhook-url2.com"
+    "webhook-url" : "",
+    "api-token" : "token2"
   },
   "os" : {
     "Xn" : true,

@@ -105,7 +105,7 @@ var testsHipchatError = []HipchatTest{
 func TestHipchatCheckConfError(t *testing.T) {
 	for _, te := range testsHipchatError {
 		if err := te.hc.CheckConf(); err == nil {
-			t.Errorf("CheckConf not occured expected error: hipchat: %#v", te.hc)
+			t.Errorf("CheckConf not occurred expected error: hipchat: %#v", te.hc)
 		}
 	}
 }

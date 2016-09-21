@@ -6,7 +6,8 @@
       "timeout" : 5
     },
     "slack" : {
-      "webhook-url" : "https://webhook-url.com"
+      "webhook-url" : "https://webhook-url.com",
+      "api-token" : "tokenZ"
     },
     "os" : {
       "n" : false,

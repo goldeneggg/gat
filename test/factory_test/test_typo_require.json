@@ -5,6 +5,6 @@
     "timeout" : 5
   },
   "slack" : {
-    "Xwebhook-url" : "https://webhook-url.com"
+    "Xapi-token" : "tokenB"
   },
 }

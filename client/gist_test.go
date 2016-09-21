@@ -158,7 +158,7 @@ var gErrTests = []GistTest{
 func TestGistErrorConf(t *testing.T) {
 	for _, te := range gErrTests {
 		if err := te.g.CheckConf(); err == nil {
-			t.Errorf("CheckConf not occured expected error: gist: %#v",
+			t.Errorf("CheckConf not occurred expected error: gist: %#v",
 				te.g)
 		}
 	}

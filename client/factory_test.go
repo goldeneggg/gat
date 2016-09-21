@@ -43,7 +43,7 @@ var factoryTests = []FactoryTest{
 			Name:     NameSlack,
 			ConfPath: ftConf,
 		},
-		exp: &slack{WebhookURL: "https://webhook-url.com", UserName: "user", Icon: "icon", Channel: "channel", Timeout: 6, WithoutMarkdown: true, WithoutUnfURL: true, Linkfy: true},
+		exp: &slack{APIToken: "token1", UserName: "user", Icon: "icon", Channel: "channel", Timeout: 6, WithoutMarkdown: true, WithoutUnfURL: true, Linkfy: true},
 	},
 	FactoryTest{
 		attr: Attr{
@@ -64,7 +64,7 @@ var factoryTests = []FactoryTest{
 			Name:     NameSlack,
 			ConfPath: ftConfTypoNonReq,
 		},
-		exp: &slack{WebhookURL: "https://webhook-url2.com", UserName: "", Icon: "", Channel: "", Timeout: 0, WithoutMarkdown: false, WithoutUnfURL: false, Linkfy: false},
+		exp: &slack{APIToken: "token2", UserName: "", Icon: "", Channel: "", Timeout: 0, WithoutMarkdown: false, WithoutUnfURL: false, Linkfy: false},
 	},
 }
 
@@ -167,7 +167,7 @@ var factoryErrTests = []FactoryTest{
 func TestFactoryError(t *testing.T) {
 	for _, te := range factoryErrTests {
 		if _, err := NewClient(te.attr); err == nil {
-			t.Errorf("NewClient not occured expected error: %#v", te.attr)
+			t.Errorf("NewClient not occurred expected error: %#v", te.attr)
 		}
 	}
 }
