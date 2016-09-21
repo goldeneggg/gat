@@ -1,5 +1,22 @@
 # Change Log
 
+## [v0.7.0](https://github.com/goldeneggg/gat/tree/v0.7.0) (2016-09-21)
+[Full Changelog](https://github.com/goldeneggg/gat/compare/v0.6.0...v0.7.0)
+
+**Merged pull requests:**
+
+- slack attachment [\#11](https://github.com/goldeneggg/gat/pull/11) ([goldeneggg](https://github.com/goldeneggg))
+
+## [v0.6.0](https://github.com/goldeneggg/gat/tree/v0.6.0) (2016-08-25)
+[Full Changelog](https://github.com/goldeneggg/gat/compare/v0.5.0...v0.6.0)
+
+**Merged pull requests:**
+
+- bump up and some refactorings [\#14](https://github.com/goldeneggg/gat/pull/14) ([goldeneggg](https://github.com/goldeneggg))
+- add goreportcard badge [\#12](https://github.com/goldeneggg/gat/pull/12) ([goldeneggg](https://github.com/goldeneggg))
+- fix CI [\#10](https://github.com/goldeneggg/gat/pull/10) ([goldeneggg](https://github.com/goldeneggg))
+- fix ci [\#9](https://github.com/goldeneggg/gat/pull/9) ([goldeneggg](https://github.com/goldeneggg))
+
 ## [v0.5.0](https://github.com/goldeneggg/gat/tree/v0.5.0) (2015-08-20)
 [Full Changelog](https://github.com/goldeneggg/gat/compare/v0.4.0...v0.5.0)
 
