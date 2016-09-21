@@ -14,10 +14,6 @@ import (
 var exitSts int
 
 func main() {
-	handleSigint()
-}
-
-func handleSigint() {
 	defer finalize()
 
 	chSig := make(chan os.Signal)
@@ -25,6 +21,7 @@ func handleSigint() {
 
 	ch := make(chan struct{})
 
+	// FIXME: parallel post using goroutine
 	go run(ch)
 
 	select {

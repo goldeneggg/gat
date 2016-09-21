@@ -28,27 +28,27 @@ type Req struct {
 }
 
 // Post requests contents to argument URL by POST method
-func (hr *Req) Post(u string) ([]byte, error) {
-	return hr.request("POST", u)
+func (req *Req) Post(u string) ([]byte, error) {
+	return req.request("POST", u)
 }
 
 // Get requests contents to argument URL by GET method
-func (hr *Req) Get(u string) ([]byte, error) {
-	return hr.request("GET", u)
+func (req *Req) Get(u string) ([]byte, error) {
+	return req.request("GET", u)
 }
 
-func (hr *Req) request(m string, u string) ([]byte, error) {
-	req, err := http.NewRequest(m, u, bytes.NewReader(hr.Body))
+func (req *Req) request(m string, u string) ([]byte, error) {
+	newRequest, err := http.NewRequest(m, u, bytes.NewReader(req.Body))
 	if err != nil {
 		return nil, err
 	}
 
-	hr.buildRequestQuery(req)
+	req.buildRequestQuery(newRequest)
 
-	hr.buildRequestHeader(req)
+	req.buildRequestHeader(newRequest)
 
 	c := &http.Client{Timeout: time.Duration(ToSec) * time.Second}
-	resp, err := c.Do(req)
+	resp, err := c.Do(newRequest)
 	if err != nil {
 		return nil, err
 	}
@@ -67,17 +67,17 @@ func (hr *Req) request(m string, u string) ([]byte, error) {
 	return respBody, nil
 }
 
-func (hr *Req) buildRequestQuery(r *http.Request) {
+func (req *Req) buildRequestQuery(r *http.Request) {
 	values := url.Values{}
-	for k, v := range hr.Queries {
+	for k, v := range req.Queries {
 		values.Set(k, v)
 	}
 
 	r.URL.RawQuery = values.Encode()
 }
 
-func (hr *Req) buildRequestHeader(r *http.Request) {
-	for k, v := range hr.Headers {
+func (req *Req) buildRequestHeader(r *http.Request) {
+	for k, v := range req.Headers {
 		r.Header.Set(k, v)
 	}
 }
