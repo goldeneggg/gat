@@ -1,5 +1,13 @@
 # Change Log
 
+## [v0.7.1](https://github.com/goldeneggg/gat/tree/v0.7.1) (2016-09-21)
+[Full Changelog](https://github.com/goldeneggg/gat/compare/v0.7.0...v0.7.1)
+
+**Merged pull requests:**
+
+- fixup [\#16](https://github.com/goldeneggg/gat/pull/16) ([goldeneggg](https://github.com/goldeneggg))
+- update CHANGELOG [\#15](https://github.com/goldeneggg/gat/pull/15) ([goldeneggg](https://github.com/goldeneggg))
+
 ## [v0.7.0](https://github.com/goldeneggg/gat/tree/v0.7.0) (2016-09-21)
 [Full Changelog](https://github.com/goldeneggg/gat/compare/v0.6.0...v0.7.0)
 
