@@ -7,14 +7,15 @@
     "public" : true
   },
   "slack" : {
-    "webhook-url" : "https://webhook-url.com",
+    "webhook-url" : "",
     "username" : "user",
     "icon" : "icon",
     "channel" : "channel",
     "timeout" : 6,
     "without-markdown" : true,
     "without-unfurl" : true,
-    "linkfy" : true
+    "linkfy" : true,
+    "api-token" : "token1"
   },
   "os" : {
     "n" : true,

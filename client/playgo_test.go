@@ -45,7 +45,7 @@ var testsPlaygoError = []PlaygoTest{
 func TestPlaygoError(t *testing.T) {
 	for _, te := range testsPlaygoError {
 		if _, err := te.p.getContent(te.files); err == nil {
-			t.Errorf("getContent not occured expected error: files: %#v", te.files)
+			t.Errorf("getContent not occurred expected error: files: %#v", te.files)
 		}
 	}
 }

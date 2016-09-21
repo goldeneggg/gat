@@ -11,41 +11,41 @@ type SlackTest struct {
 var sTests = []SlackTest{
 	SlackTest{
 		s: &slack{
-			WebhookURL: "hook1",
+			APIToken: "token1",
 		},
 		content:    []byte("content1"),
 		expPayload: `{"text":"content1","mrkdwn":true,"unfurl_links":true}`,
 	},
 	SlackTest{
 		s: &slack{
-			WebhookURL: "hook2",
-			UserName:   "user2",
+			APIToken: "token2",
+			UserName: "user2",
 		},
 		content:    []byte("content2"),
 		expPayload: `{"text":"content2","username":"user2","mrkdwn":true,"unfurl_links":true}`,
 	},
 	SlackTest{
 		s: &slack{
-			WebhookURL: "hook3",
-			UserName:   "user3",
-			Icon:       "icon3",
+			APIToken: "token3",
+			UserName: "user3",
+			Icon:     "icon3",
 		},
 		content:    []byte("content3"),
 		expPayload: `{"text":"content3","username":"user3","icon_url":"icon3","mrkdwn":true,"unfurl_links":true}`,
 	},
 	SlackTest{
 		s: &slack{
-			WebhookURL: "hook4",
-			UserName:   "user4",
-			Icon:       "icon4",
-			Channel:    "channel4",
+			APIToken: "token4",
+			UserName: "user4",
+			Icon:     "icon4",
+			Channel:  "channel4",
 		},
 		content:    []byte("content4"),
 		expPayload: `{"text":"content4","username":"user4","icon_url":"icon4","channel":"channel4","mrkdwn":true,"unfurl_links":true}`,
 	},
 	SlackTest{
 		s: &slack{
-			WebhookURL:      "hook5",
+			APIToken:        "token5",
 			UserName:        "user5",
 			Icon:            "icon5",
 			Channel:         "channel5",
@@ -56,7 +56,7 @@ var sTests = []SlackTest{
 	},
 	SlackTest{
 		s: &slack{
-			WebhookURL:      "hook6",
+			APIToken:        "token6",
 			UserName:        "user6",
 			Icon:            "icon6",
 			Channel:         "channel6",
@@ -68,7 +68,7 @@ var sTests = []SlackTest{
 	},
 	SlackTest{
 		s: &slack{
-			WebhookURL:      "hook7",
+			APIToken:        "token7",
 			UserName:        "user7",
 			Icon:            ":icon7:",
 			Channel:         "channel7",
@@ -80,7 +80,7 @@ var sTests = []SlackTest{
 	},
 	SlackTest{
 		s: &slack{
-			WebhookURL:      "hook8",
+			APIToken:        "token8",
 			UserName:        "user8",
 			Icon:            "::",
 			Channel:         "channel8",
@@ -112,7 +112,7 @@ func TestSlack(t *testing.T) {
 var testsSlackError = []SlackTest{
 	SlackTest{
 		s: &slack{
-			WebhookURL: "",
+			APIToken: "",
 		},
 	},
 	SlackTest{
@@ -123,7 +123,7 @@ var testsSlackError = []SlackTest{
 func TestSlackCheckConfError(t *testing.T) {
 	for _, te := range testsSlackError {
 		if err := te.s.CheckConf(); err == nil {
-			t.Errorf("CheckConf not occured expected error: slack: %#v", te.s)
+			t.Errorf("CheckConf not occurred expected error: slack: %#v", te.s)
 		}
 	}
 }

@@ -1,6 +1,6 @@
 {
 	"ImportPath": "github.com/goldeneggg/gat",
-	"GoVersion": "go1.7",
+	"GoVersion": "go1.7.1",
 	"Deps": [
 		{
 			"ImportPath": "github.com/urfave/cli",

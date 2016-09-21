@@ -78,6 +78,10 @@ var SlackFlags = []cli.Flag{
 		Name:  "color",
 		Usage: "Color name or any hex color code",
 	},
+	cli.StringFlag{
+		Name:  "api-token",
+		Usage: "Your oauth2 API token",
+	},
 }
 
 // HipchatFlags are hipchat subcommand flags

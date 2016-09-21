@@ -19,7 +19,7 @@ const (
 var (
 	_ Client = new(slack)
 
-	errSlackURL     = fmt.Errorf("webhook-url is empty")
+	errSlackToken   = fmt.Errorf("api-token is empty")
 	errSlackPayload = fmt.Errorf("payload is empty")
 )
 
@@ -41,8 +41,8 @@ func newSlack() *slack {
 }
 
 func (s *slack) CheckConf() error {
-	if len(s.WebhookURL) == 0 {
-		return errSlackURL
+	if len(s.APIToken) == 0 {
+		return errSlackToken
 	}
 
 	if s.Timeout < 0 {
