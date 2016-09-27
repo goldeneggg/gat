@@ -1,29 +1,52 @@
-GO ?= go
-GODEP ?= godep
-GOLINT ?= golint
+#GO ?= go
+#GODEP ?= godep
+#GOLINT ?= golint
 BINNAME := gat
-PGMPKGPATH := .
-TESTTARGET := ./...
+PGM_PATH := 'github.com/goldeneggg/gat'
+SAVE_TARGET := ./...
 PROFDIR := ./.profile
 PROFTARGET := ./client
-LINTTARGET := ./...
 
-all: depbuild
+all: build
 
-depbuild: depsave
-	$(GODEP) $(GO) build -o $(GOBIN)/$(BINNAME) $(PGMPKGPATH)
+build:
+	@echo "Building ${GOBIN}/$(BINNAME)"
+	@GO15VENDOREXPERIMENT=1 godep go build -o ${GOBIN}/$(BINNAME) $(PGM_PATH)
 
-deptest: depvet
-	$(GODEP) $(GO) test -race -v $(TESTTARGET)
+test-all:
+	@echo "Testing"
+	@GO15VENDOREXPERIMENT=1 godep go test -race -v $(PGM_PATH)
+	@GO15VENDOREXPERIMENT=1 godep go test -race -v $(PGM_PATH)/client...
 
-depvet: depsave
-	$(GODEP) $(GO) vet -n $(TESTTARGET)
+prof:
+	@[ ! -d $(PROFDIR) ] && mkdir $(PROFDIR); GO15VENDOREXPERIMENT=1 godep go test -bench . -benchmem -blockprofile $(PROFDIR)/block.out -cover -coverprofile $(PROFDIR)/cover.out -cpuprofile $(PROFDIR)/cpu.out -memprofile $(PROFDIR)/mem.out $(PROFTARGET)
 
-depsave:
-	$(GODEP) save
+vet:
+	@echo "Vetting"
+	@GO15VENDOREXPERIMENT=1 godep go tool vet --all -shadow ./*.go
+	@GO15VENDOREXPERIMENT=1 godep go tool vet -all -shadow ./client
+	@GO15VENDOREXPERIMENT=1 godep go tool vet -all -shadow ./client/http
 
-proftest:
-	[ ! -d $(PROFDIR) ] && mkdir $(PROFDIR); $(GO) test -bench . -benchmem -blockprofile $(PROFDIR)/block.out -cover -coverprofile $(PROFDIR)/cover.out -cpuprofile $(PROFDIR)/cpu.out -memprofile $(PROFDIR)/mem.out $(PROFTARGET)
+dep-save:
+	@echo "Run godep save"
+	@GO15VENDOREXPERIMENT=1 godep save -v $(SAVE_TARGET)
+
+dep-saved-build: dep-save build
 
 lint:
-	$(GOLINT) $(LINTTARGET)
+	@echo "Linting"
+	@GO15VENDOREXPERIMENT=1 ${GOBIN}/golint $(PGM_PATH)
+	@GO15VENDOREXPERIMENT=1 ${GOBIN}/golint $(PGM_PATH)/client
+	@GO15VENDOREXPERIMENT=1 ${GOBIN}/golint $(PGM_PATH)/client/http
+
+release:
+	@echo "Releasing"
+	@./scripts/release.sh
+
+publish: release
+	@echo "Publishing releases to github"
+	@./scripts/publish.sh
+
+formula:
+	@echo "Generating formula"
+	@./scripts/publish.sh formula-only

@@ -1,11 +1,15 @@
 {
 	"ImportPath": "github.com/goldeneggg/gat",
-	"GoVersion": "go1.7.1",
+	"GoVersion": "go1.7",
+	"GodepVersion": "v74",
+	"Packages": [
+		"./..."
+	],
 	"Deps": [
 		{
 			"ImportPath": "github.com/urfave/cli",
-			"Comment": "v1.18.0-53-g05fe449",
-			"Rev": "05fe449c81eb7305a34e9253c321c960a1c5e057"
+			"Comment": "v1.18.0-67-gd53eb99",
+			"Rev": "d53eb991652b1d438abdd34ce4bfa3ef1539108e"
 		}
 	]
 }

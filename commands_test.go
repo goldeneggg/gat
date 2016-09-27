@@ -16,7 +16,7 @@ const (
 func getApp() *cli.App {
 	app := cli.NewApp()
 	app.Name = "gatTest"
-	app.Version = Version
+	app.Version = VERSION
 	app.Usage = "Test gat"
 	app.Author = "@goldeneggg"
 	app.Email = "jpshadowapps@gmail.com"
