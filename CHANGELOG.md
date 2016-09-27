@@ -1,5 +1,12 @@
 # Change Log
 
+## [v0.7.2](https://github.com/goldeneggg/gat/tree/v0.7.2) (2016-09-27)
+[Full Changelog](https://github.com/goldeneggg/gat/compare/v0.7.1...v0.7.2)
+
+**Merged pull requests:**
+
+- fix management flow [\#17](https://github.com/goldeneggg/gat/pull/17) ([goldeneggg](https://github.com/goldeneggg))
+
 ## [v0.7.1](https://github.com/goldeneggg/gat/tree/v0.7.1) (2016-09-21)
 [Full Changelog](https://github.com/goldeneggg/gat/compare/v0.7.0...v0.7.1)
 
