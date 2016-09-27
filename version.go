@@ -1,6 +1,4 @@
 package main
 
-const (
-	// Version is gat version
-	Version = "0.7.1"
-)
+// VERSION info
+const VERSION = "0.7.2"

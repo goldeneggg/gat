@@ -8,3 +8,7 @@ MEMO.md
 *.test
 *.bak
 *~
+
+releases
+pkg
+*formula.rb

@@ -37,7 +37,7 @@ func run(ch chan struct{}) {
 
 	app := cli.NewApp()
 	app.Name = "gat"
-	app.Version = Version
+	app.Version = VERSION
 	app.Usage = "Utility tool of concatnating and printing file to various services"
 	app.Author = "goldeneggg"
 	app.Email = "jpshadowapps@gmail.com"
