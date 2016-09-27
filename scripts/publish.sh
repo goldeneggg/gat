@@ -17,7 +17,7 @@ publish(){
     done
   done
   popd
-  #ghr --draft --replace ${TAG} ${PKG_DIR}
+  ghr --draft --replace ${TAG} ${PKG_DIR}
 }
 
 shasum256() {
