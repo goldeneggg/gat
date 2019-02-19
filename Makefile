@@ -32,30 +32,45 @@ prof:
 .PHONY: vet
 vet:
 	@echo "Vetting"
-	@go tool vet --all -shadow ./*.go
-	@go tool vet -all -shadow ./client
-	@go tool vet -all -shadow ./client/http
+	@go vet -all -shadow ./*.go
+	@go vet -all -shadow ./client
+	@go vet -all -shadow ./client/http
 
-dep-save:
-	@echo "Run godep save"
-	@save -v $(SAVE_TARGET)
-
-dep-saved-build: dep-save build
-
+.PHONY: lint
 lint:
 	@echo "Linting"
-	@${GOBIN}/golint $(PGM_PATH)
-	@${GOBIN}/golint $(PGM_PATH)/client
-	@${GOBIN}/golint $(PGM_PATH)/client/http
+	@golint -set_exit_status $(PGM_PATH)
+	@golint -set_exit_status $(PGM_PATH)/client
+	@golint -set_exit_status $(PGM_PATH)/client/http
 
+.PHONY: validate
+validate: vet lint
+
+lint-travis:
+	@travis lint .travis.yml
+
+test-goreleaser:
+	@echo "Testing goreleaser"
+	@goreleaser --snapshot --skip-publish --rm-dist
+
+test-goreleaser-on-ci:
+	@echo "Testing goreleaser (on CI)"
+	@./goreleaser --snapshot --skip-publish --rm-dist
+
+.PHONY: ci
+ci: test lint test-goreleaser-on-ci
+
+.PHONY: release
 release:
 	@echo "Releasing"
 	@./scripts/release.sh
 
+.PHONY: publish
 publish: release
 	@echo "Publishing releases to github"
 	@./scripts/publish.sh
 
+.PHONY: formula
 formula:
 	@echo "Generating formula"
 	@./scripts/publish.sh formula-only

@@ -2,17 +2,32 @@ language: go
 
 go:
   - 1.11.x
+  - master
+
+matrix:
+  allow_failures:
+    - go: master
+
+addons:
+  apt:
+    packages:
+    - rpm
 
 sudo: false
 
 env:
   - GO111MODULE=on
 
+before_install:
+  - go get -u github.com/golang/lint/golint
+  - curl -sL -o goreleaser.tar.gz https://github.com/goreleaser/goreleaser/releases/download/v0.101.0/goreleaser_Linux_x86_64.tar.gz
+  - tar -zxf goreleaser.tar.gz
+
 install:
   - go mod download
 
 script:
-  - make test
+  - make ci
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
@@ -23,3 +38,7 @@ deploy:
     script: curl -sL http://git.io/goreleaser | bash
     on:
       tags: true
+
+notifications:
+  email:
+    on_success: never
