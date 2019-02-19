@@ -1,0 +1,52 @@
+before:
+  hooks:
+    - go mod download
+
+release:
+  prerelease: true
+
+builds:
+  - binary: gat
+    goos:
+      - windows
+      - darwin
+      - linux
+      - freebsd
+    goarch:
+      - 386
+      - amd64
+      - arm64
+
+archive:
+  format: tar.gz
+
+  format_overrides:
+    - goos: windows
+      format: zip
+
+checksum:
+  name_template: 'checksums.txt'
+
+changelog:
+  sort: asc
+
+brew:
+  github:
+    owner: goldeneggg
+    name: homebrew-tap
+  commit_author:
+    name: Fuminori Sakamoto
+    email: jpshadowapps@gmail.com
+  folder: Formula
+  homepage: 'https://github.com/goldeneggg/gat'
+  description: 'Utility tool of concatnating and printing file to various services'
+  test: |
+    system '#{bin}/gat -v'
+
+nfpm:
+  license: MIT
+  maintainer: Fuminori Sakamoto
+  homepage: https://github.com/goldeneggg/gat
+  formats:
+    - deb
+    - rpm
