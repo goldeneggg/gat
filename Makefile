@@ -1,43 +1,52 @@
 #GO ?= go
 #GODEP ?= godep
 #GOLINT ?= golint
-BINNAME := gat
+NAME := gat
+SRCS := $(shell find . -type f -name '*.go' | \grep -v 'vendor')
 PGM_PATH := 'github.com/goldeneggg/gat'
 SAVE_TARGET := ./...
 PROFDIR := ./.profile
 PROFTARGET := ./client
 
+.DEFAULT_GOAL := bin/$(NAME)
+
 all: build
 
-build:
-	@echo "Building ${GOBIN}/$(BINNAME)"
-	@GO15VENDOREXPERIMENT=1 godep go build -o ${GOBIN}/$(BINNAME) $(PGM_PATH)
+mod-dl:
+	@GO111MODULE=on go mod download
 
-test-all:
+bin/$(NAME): $(SRCS)
+	@echo "Building bin/$(NAME)"
+	@go build -o bin/$(NAME) $(PGM_PATH)
+
+.PHONY: test
+test:
 	@echo "Testing"
-	@GO15VENDOREXPERIMENT=1 godep go test -race -v $(PGM_PATH)
-	@GO15VENDOREXPERIMENT=1 godep go test -race -v $(PGM_PATH)/client...
+	@go test -race -v $(PGM_PATH)
+	@go test -race -v $(PGM_PATH)/client...
 
+.PHONY: prof
 prof:
-	@[ ! -d $(PROFDIR) ] && mkdir $(PROFDIR); GO15VENDOREXPERIMENT=1 godep go test -bench . -benchmem -blockprofile $(PROFDIR)/block.out -cover -coverprofile $(PROFDIR)/cover.out -cpuprofile $(PROFDIR)/cpu.out -memprofile $(PROFDIR)/mem.out $(PROFTARGET)
+	@[ ! -d $(PROFDIR) ] && mkdir $(PROFDIR); go test -bench . -benchmem -blockprofile $(PROFDIR)/block.out -cover -coverprofile $(PROFDIR)/cover.out -cpuprofile $(PROFDIR)/cpu.out -memprofile $(PROFDIR)/mem.out $(PROFTARGET)
 
+.PHONY: vet
 vet:
 	@echo "Vetting"
-	@GO15VENDOREXPERIMENT=1 godep go tool vet --all -shadow ./*.go
-	@GO15VENDOREXPERIMENT=1 godep go tool vet -all -shadow ./client
-	@GO15VENDOREXPERIMENT=1 godep go tool vet -all -shadow ./client/http
+	@go tool vet --all -shadow ./*.go
+	@go tool vet -all -shadow ./client
+	@go tool vet -all -shadow ./client/http
 
 dep-save:
 	@echo "Run godep save"
-	@GO15VENDOREXPERIMENT=1 godep save -v $(SAVE_TARGET)
+	@save -v $(SAVE_TARGET)
 
 dep-saved-build: dep-save build
 
 lint:
 	@echo "Linting"
-	@GO15VENDOREXPERIMENT=1 ${GOBIN}/golint $(PGM_PATH)
-	@GO15VENDOREXPERIMENT=1 ${GOBIN}/golint $(PGM_PATH)/client
-	@GO15VENDOREXPERIMENT=1 ${GOBIN}/golint $(PGM_PATH)/client/http
+	@${GOBIN}/golint $(PGM_PATH)
+	@${GOBIN}/golint $(PGM_PATH)/client
+	@${GOBIN}/golint $(PGM_PATH)/client/http
 
 release:
 	@echo "Releasing"

@@ -1,16 +1,18 @@
 language: go
 
 go:
-  - 1.5
-  - 1.6
-  - 1.7
-  - 1.7.1
-
-before_install:
-  - go get -u github.com/tools/godep
-  - GO15VENDOREXPERIMENT=1 godep restore -v
-
-script:
-- make test-all
+  - 1.11.x
 
 sudo: false
+
+env:
+  - GO111MODULE=on
+
+install:
+  - go mod download
+
+script:
+  - make test
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
