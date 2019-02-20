@@ -4,6 +4,8 @@ before:
   hooks:
     # you may remove this if you don't use vgo
     - go mod download
+    # Note: for check
+    - git diff
 
 builds:
 - env:
@@ -21,6 +23,9 @@ builds:
   ignore:
     - goos: darwin
       goarch: 386
+  hooks:
+    # Note: for check
+    post: git diff
 
 archive:
   # replacements:
