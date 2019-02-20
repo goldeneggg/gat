@@ -1,6 +1,3 @@
-#GO ?= go
-#GODEP ?= godep
-#GOLINT ?= golint
 NAME := gat
 SRCS := $(shell find . -type f -name '*.go' | \grep -v 'vendor')
 PGM_PATH := 'github.com/goldeneggg/gat'
