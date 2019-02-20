@@ -50,12 +50,37 @@ test-goreleaser:
 	@echo "Testing goreleaser"
 	@goreleaser release --snapshot --skip-publish --rm-dist
 
+# NOTE: require commands for .travis.yml "before_install" task
+# - curl -sL -o goreleaser.tar.gz https://github.com/goreleaser/goreleaser/releases/download/v0.101.0/goreleaser_Linux_x86_64.tar.gz
+# - tar -zxf goreleaser.tar.gz
 test-goreleaser-on-ci:
 	@echo "Testing goreleaser (on CI)"
 	@./goreleaser release --snapshot --skip-publish --rm-dist
 
+# .PHONY: docker-test-goreleaser
+# docker-test-goreleaser:
+# 	@docker run --rm --privileged \
+# 		-v $$PWD:/go/src/github.com/goldeneggg/gat \
+# 		-v /var/run/docker.sock:/var/run/docker.sock \
+# 		-w /go/src/github.com/goldeneggg/gat \
+# 		-e GITHUB_TOKEN \
+# 		-e GO111MODULE \
+# 		goreleaser/goreleaser release --snapshot --skip-publish --rm-dist
+
 .PHONY: ci
-ci: test lint test-goreleaser-on-ci
+ci: test lint
+
+# release process for manual operation
+# - (merge pull request)
+# - git checkout master && git pull --rebase origin master
+# - git tag -a vX.X.X -m 'tag comment'
+# - git push --tags
+# - make goreleaser
+.PHONY: goreleaser
+goreleaser:
+	@goreleaser release --debug --rm-dist
+
+# XXX: old and unused tasks as follows
 
 .PHONY: release
 release:

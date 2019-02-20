@@ -3,10 +3,7 @@
 before:
   hooks:
     # you may remove this if you don't use vgo
-    # Note: comment out because executed by travis ci "install" task
-    # - go mod download
-    # Note: for check
-    - git diff
+    - go mod download
 
 builds:
 - env:
@@ -24,9 +21,8 @@ builds:
   ignore:
     - goos: darwin
       goarch: 386
-  hooks:
-    # Note: for check
-    post: git diff
+  # hooks:
+  #   post: git diff
 
 archive:
   # replacements:
@@ -64,3 +60,12 @@ brew:
   description: 'Utility tool of concatnating and printing file to various services'
   test: |
     system '#{bin}/gat -v'
+
+# TODO: support for execution on Mac
+# nfpm:
+#   license: MIT
+#   maintainer: Fuminori Sakamoto
+#   homepage: https://github.com/goldeneggg/gat
+#   formats:
+#     - deb
+#     - rpm

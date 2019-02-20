@@ -2,16 +2,17 @@ language: go
 
 go:
   - 1.11.x
-    #  - master
+  - master
 
-# matrix:
-#   allow_failures:
-#     - go: master
+matrix:
+  allow_failures:
+    - go: master
 
-addons:
-  apt:
-    packages:
-    - rpm
+# addons:
+#   apt:
+#     packages:
+#     # require for nfpm task of goreleaser
+#     - rpm
 
 sudo: false
 
@@ -20,8 +21,9 @@ env:
 
 before_install:
   - go get -u github.com/golang/lint/golint
-  - curl -sL -o goreleaser.tar.gz https://github.com/goreleaser/goreleaser/releases/download/v0.101.0/goreleaser_Linux_x86_64.tar.gz
-  - tar -zxf goreleaser.tar.gz
+  # these are require for goreleaser's CI as follows
+  # - curl -sL -o goreleaser.tar.gz https://github.com/goreleaser/goreleaser/releases/download/v0.101.0/goreleaser_Linux_x86_64.tar.gz
+  # - tar -zxf goreleaser.tar.gz
 
 install:
   - go mod download
@@ -32,6 +34,7 @@ script:
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
+# FIXME: this is not work. See: https://travis-ci.org/goldeneggg/gat/jobs/495808850#L890
 deploy:
   - provider: script
     skip_cleanup: true
