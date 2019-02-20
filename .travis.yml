@@ -2,11 +2,11 @@ language: go
 
 go:
   - 1.11.x
-  - master
+    #  - master
 
-matrix:
-  allow_failures:
-    - go: master
+# matrix:
+#   allow_failures:
+#     - go: master
 
 addons:
   apt:
@@ -38,6 +38,7 @@ deploy:
     script: curl -sL http://git.io/goreleaser | bash
     on:
       tags: true
+      condition: $TRAVIS_OS_NAME = linux
 
 notifications:
   email:
