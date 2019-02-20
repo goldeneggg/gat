@@ -58,11 +58,3 @@ brew:
   description: 'Utility tool of concatnating and printing file to various services'
   test: |
     system '#{bin}/gat -v'
-
-nfpm:
-  license: MIT
-  maintainer: Fuminori Sakamoto
-  homepage: https://github.com/goldeneggg/gat
-  formats:
-    - deb
-    - rpm
