@@ -3,7 +3,8 @@
 before:
   hooks:
     # you may remove this if you don't use vgo
-    - go mod download
+    # Note: comment out because executed by travis ci "install" task
+    # - go mod download
     # Note: for check
     - git diff
 
