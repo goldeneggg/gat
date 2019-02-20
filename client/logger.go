@@ -27,14 +27,14 @@ type Log struct {
 // Err writes the output for a error event
 func (l *Log) Err(v ...interface{}) {
 	if l.isDebug {
-		l.errorLogger.Println(v)
+		l.errorLogger.Println(v...)
 	}
 }
 
 // Debug writes the output for a debug event
 func (l *Log) Debug(v ...interface{}) {
 	if l.isDebug {
-		l.debugLogger.Println(v)
+		l.debugLogger.Println(v...)
 	}
 }
 

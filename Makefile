@@ -1,52 +1,76 @@
 #GO ?= go
 #GODEP ?= godep
 #GOLINT ?= golint
-BINNAME := gat
+NAME := gat
+SRCS := $(shell find . -type f -name '*.go' | \grep -v 'vendor')
 PGM_PATH := 'github.com/goldeneggg/gat'
 SAVE_TARGET := ./...
 PROFDIR := ./.profile
 PROFTARGET := ./client
 
+.DEFAULT_GOAL := bin/$(NAME)
+
 all: build
 
-build:
-	@echo "Building ${GOBIN}/$(BINNAME)"
-	@GO15VENDOREXPERIMENT=1 godep go build -o ${GOBIN}/$(BINNAME) $(PGM_PATH)
+mod-dl:
+	@GO111MODULE=on go mod download
 
-test-all:
+bin/$(NAME): $(SRCS)
+	@echo "Building bin/$(NAME)"
+	@go build -o bin/$(NAME) $(PGM_PATH)
+
+.PHONY: test
+test:
 	@echo "Testing"
-	@GO15VENDOREXPERIMENT=1 godep go test -race -v $(PGM_PATH)
-	@GO15VENDOREXPERIMENT=1 godep go test -race -v $(PGM_PATH)/client...
+	@go test -race -v $(PGM_PATH)
+	@go test -race -v $(PGM_PATH)/client...
 
+.PHONY: prof
 prof:
-	@[ ! -d $(PROFDIR) ] && mkdir $(PROFDIR); GO15VENDOREXPERIMENT=1 godep go test -bench . -benchmem -blockprofile $(PROFDIR)/block.out -cover -coverprofile $(PROFDIR)/cover.out -cpuprofile $(PROFDIR)/cpu.out -memprofile $(PROFDIR)/mem.out $(PROFTARGET)
+	@[ ! -d $(PROFDIR) ] && mkdir $(PROFDIR); go test -bench . -benchmem -blockprofile $(PROFDIR)/block.out -cover -coverprofile $(PROFDIR)/cover.out -cpuprofile $(PROFDIR)/cpu.out -memprofile $(PROFDIR)/mem.out $(PROFTARGET)
 
+.PHONY: vet
 vet:
 	@echo "Vetting"
-	@GO15VENDOREXPERIMENT=1 godep go tool vet --all -shadow ./*.go
-	@GO15VENDOREXPERIMENT=1 godep go tool vet -all -shadow ./client
-	@GO15VENDOREXPERIMENT=1 godep go tool vet -all -shadow ./client/http
+	@go vet -all -shadow ./*.go
+	@go vet -all -shadow ./client
+	@go vet -all -shadow ./client/http
 
-dep-save:
-	@echo "Run godep save"
-	@GO15VENDOREXPERIMENT=1 godep save -v $(SAVE_TARGET)
-
-dep-saved-build: dep-save build
-
+.PHONY: lint
 lint:
 	@echo "Linting"
-	@GO15VENDOREXPERIMENT=1 ${GOBIN}/golint $(PGM_PATH)
-	@GO15VENDOREXPERIMENT=1 ${GOBIN}/golint $(PGM_PATH)/client
-	@GO15VENDOREXPERIMENT=1 ${GOBIN}/golint $(PGM_PATH)/client/http
+	@golint -set_exit_status $(PGM_PATH)
+	@golint -set_exit_status $(PGM_PATH)/client
+	@golint -set_exit_status $(PGM_PATH)/client/http
 
+.PHONY: validate
+validate: vet lint
+
+lint-travis:
+	@travis lint .travis.yml
+
+test-goreleaser:
+	@echo "Testing goreleaser"
+	@goreleaser release --snapshot --skip-publish --rm-dist
+
+test-goreleaser-on-ci:
+	@echo "Testing goreleaser (on CI)"
+	@./goreleaser release --snapshot --skip-publish --rm-dist
+
+.PHONY: ci
+ci: test lint test-goreleaser-on-ci
+
+.PHONY: release
 release:
 	@echo "Releasing"
 	@./scripts/release.sh
 
+.PHONY: publish
 publish: release
 	@echo "Publishing releases to github"
 	@./scripts/publish.sh
 
+.PHONY: formula
 formula:
 	@echo "Generating formula"
 	@./scripts/publish.sh formula-only

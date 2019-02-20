@@ -12,3 +12,7 @@ MEMO.md
 releases
 pkg
 *formula.rb
+
+.envrc
+bin
+dist
