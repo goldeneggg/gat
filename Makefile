@@ -51,11 +51,11 @@ lint-travis:
 
 test-goreleaser:
 	@echo "Testing goreleaser"
-	@goreleaser --snapshot --skip-publish --rm-dist
+	@goreleaser release --snapshot --skip-publish --rm-dist
 
 test-goreleaser-on-ci:
 	@echo "Testing goreleaser (on CI)"
-	@./goreleaser --snapshot --skip-publish --rm-dist
+	@./goreleaser release --snapshot --skip-publish --rm-dist
 
 .PHONY: ci
 ci: test lint test-goreleaser-on-ci
