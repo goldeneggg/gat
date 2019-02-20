@@ -14,13 +14,12 @@ Target services
 ### Using Homebrew for OS X
 
 ```
-$ brew tap goldeneggg/gat
-$ brew install gat
+$ brew install goldeneggg/tap/gat
 ```
 
 ### Or direct download
 
-Download from [latest release](https://github.com/goldeneggg/lsec2/releases/latest)
+Download from [latest release](https://github.com/goldeneggg/gat/releases/latest)
 
 ## Usage
 
