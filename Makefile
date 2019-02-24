@@ -87,20 +87,3 @@ ci: test lint
 .PHONY: goreleaser
 goreleaser:
 	@goreleaser release --debug --rm-dist
-
-# XXX: old and unused tasks as follows
-
-.PHONY: release
-release:
-	@echo "Releasing"
-	@./scripts/release.sh
-
-.PHONY: publish
-publish: release
-	@echo "Publishing releases to github"
-	@./scripts/publish.sh
-
-.PHONY: formula
-formula:
-	@echo "Generating formula"
-	@./scripts/publish.sh formula-only
