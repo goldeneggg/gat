@@ -43,6 +43,14 @@ lint:
 .PHONY: validate
 validate: vet lint
 
+.PHONY: vendor
+vendor:
+	@GO111MODULE=on go mod vendor
+
+vendor-build:
+	@echo "Building bin/$(NAME) using vendor libraries"
+	@go build -mod vendor -o bin/$(NAME) $(PGM_PATH)
+
 lint-travis:
 	@travis lint .travis.yml
 
