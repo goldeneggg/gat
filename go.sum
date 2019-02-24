@@ -1,2 +1,2 @@
-github.com/urfave/cli v0.0.0-20160917213806-d53eb991652b h1:NCe8LNa+eGKU8K2/UEbMBM303YWoS0/PrJlbSglCUh0=
-github.com/urfave/cli v0.0.0-20160917213806-d53eb991652b/go.mod h1:70zkFmudgCuE/ngEzBv17Jvp/497gISqfk5gWijbERA=
+github.com/urfave/cli v1.19.1 h1:0mKm4ZoB74PxYmZVua162y1dGt1qc10MyymYRBf3lb8=
+github.com/urfave/cli v1.19.1/go.mod h1:70zkFmudgCuE/ngEzBv17Jvp/497gISqfk5gWijbERA=
