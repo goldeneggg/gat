@@ -16,3 +16,4 @@ pkg
 .envrc
 bin
 dist
+vendor/
