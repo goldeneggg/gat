@@ -27,6 +27,7 @@ before_install:
 
 install:
   - go mod download
+  - git status --porcelain -v
 
 script:
   - make ci
