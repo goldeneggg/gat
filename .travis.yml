@@ -34,7 +34,7 @@ deploy:
     script: bash goreleaser.sh
     on:
       tags: true
-      condition: $TRAVIS_OS_NAME = linux
+      condition: $TRAVIS_OS_NAME = linux && $TRAVIS_GO_VERSION =~ ^1\.12.*
 
 notifications:
   email:
