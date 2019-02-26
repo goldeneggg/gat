@@ -19,8 +19,7 @@ bin/$(NAME): $(SRCS)
 .PHONY: test
 test:
 	@echo "Testing"
-	@go test -race -v $(PGM_PATH)
-	@go test -race -v $(PGM_PATH)/client...
+	@go test -race -cover -v $$(go list ./... | \grep -v 'vendor')
 
 .PHONY: prof
 prof:
@@ -29,16 +28,12 @@ prof:
 .PHONY: vet
 vet:
 	@echo "Vetting"
-	@go vet -all -shadow ./*.go
-	@go vet -all -shadow ./client
-	@go vet -all -shadow ./client/http
+	@go vet -n -x $$(go list ./... | \grep -v 'vendor')
 
 .PHONY: lint
 lint:
 	@echo "Linting"
-	@golint -set_exit_status $(PGM_PATH)
-	@golint -set_exit_status $(PGM_PATH)/client
-	@golint -set_exit_status $(PGM_PATH)/client/http
+	@golint -set_exit_status $$(go list ./... | \grep -v 'vendor')
 
 .PHONY: validate
 validate: vet lint
@@ -74,9 +69,6 @@ test-goreleaser-on-ci:
 # 		-e GITHUB_TOKEN \
 # 		-e GO111MODULE \
 # 		goreleaser/goreleaser release --snapshot --skip-publish --rm-dist
-
-.PHONY: ci
-ci: test lint
 
 # release process for manual operation
 # - (merge pull request)
