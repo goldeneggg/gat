@@ -61,11 +61,10 @@ brew:
   test: |
     system '#{bin}/gat -v'
 
-# TODO: support for execution on Mac
-# nfpm:
-#   license: MIT
-#   maintainer: Fuminori Sakamoto
-#   homepage: https://github.com/goldeneggg/gat
-#   formats:
-#     - deb
-#     - rpm
+nfpm:
+  license: MIT
+  maintainer: Fuminori Sakamoto
+  homepage: https://github.com/goldeneggg/gat
+  formats:
+    - deb
+    - rpm
