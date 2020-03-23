@@ -1,4 +1,7 @@
-package main
+// +build tools
 
-// VERSION info
-const VERSION = "0.8.8"
+package tools
+
+import (
+	_ "golang.org/x/lint/golint"
+)
