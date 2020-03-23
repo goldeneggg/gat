@@ -1,5 +1,9 @@
-gat [![Build Status](https://travis-ci.org/goldeneggg/gat.svg?branch=master)](https://travis-ci.org/goldeneggg/gat) [![GolangCI](https://golangci.com/badges/github.com/goldeneggg/gat.svg)](https://golangci.com/r/github.com/goldeneggg/gat) [![Go Report Card](https://goreportcard.com/badge/github.com/goldeneggg/gat)](https://goreportcard.com/report/github.com/goldeneggg/gat) [![GoDoc](https://godoc.org/github.com/goldeneggg/gat?status.png)](https://godoc.org/github.com/goldeneggg/gat) [![MIT License](http://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/goldeneggg/gat/blob/master/LICENSE)
+gat
 ==========
+
+[![Workflow Status](https://github.com/goldeneggg/gat/workflows/CI/badge.svg)](https://github.com/goldeneggg/gat/actions)
+[![MIT License](http://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/goldeneggg/gat/blob/master/LICENSE)
+
 __gat__ is utility tool of concatnating and printing file to various services.
 
 Target services
