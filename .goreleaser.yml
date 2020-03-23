@@ -8,6 +8,7 @@ before:
 builds:
 - env:
   - CGO_ENABLED=0
+  - GO111MODULE=on
   goos:
     - darwin
     - linux
@@ -16,13 +17,9 @@ builds:
   goarch:
     - '386'
     - amd64
-    - arm
-    - arm64
   ignore:
     - goos: darwin
       goarch: 386
-  # hooks:
-  #   post: git diff
 
 archive:
   # replacements:
