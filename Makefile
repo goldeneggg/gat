@@ -6,8 +6,6 @@ SRCS = $(shell find . -type f -name '*.go' | \grep -v 'vendor')
 
 .DEFAULT_GOAL := bin/$(NAME)
 
-all: build
-
 mod-dl:
 	@GO111MODULE=on go mod download
 
@@ -37,7 +35,7 @@ lint:
 	@golint -set_exit_status $$(go list ./... | \grep -v 'vendor')
 
 .PHONY: ci
-ci: test vet lint
+ci: bin/$(NAME) test vet lint
 
 .PHONY: vendor
 vendor:
