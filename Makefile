@@ -1,16 +1,19 @@
 NAME := gat
-SRCS := $(shell find . -type f -name '*.go' | \grep -v 'vendor')
 PGM_PATH := 'github.com/goldeneggg/gat'
 SAVE_TARGET := ./...
-PROFDIR := ./.profile
-PROFTARGET := ./client
+
+SRCS = $(shell find . -type f -name '*.go' | \grep -v 'vendor')
 
 .DEFAULT_GOAL := bin/$(NAME)
 
-all: build
-
 mod-dl:
 	@GO111MODULE=on go mod download
+
+mod-tidy:
+	@GO111MODULE=on go mod tidy
+
+mod-golint-install: mod-tidy
+	@GO111MODULE=on go install golang.org/x/lint/golint
 
 bin/$(NAME): $(SRCS)
 	@echo "Building bin/$(NAME)"
@@ -20,10 +23,6 @@ bin/$(NAME): $(SRCS)
 test:
 	@echo "Testing"
 	@go test -race -cover -v $$(go list ./... | \grep -v 'vendor')
-
-.PHONY: prof
-prof:
-	@[ ! -d $(PROFDIR) ] && mkdir $(PROFDIR); go test -bench . -benchmem -blockprofile $(PROFDIR)/block.out -cover -coverprofile $(PROFDIR)/cover.out -cpuprofile $(PROFDIR)/cpu.out -memprofile $(PROFDIR)/mem.out $(PROFTARGET)
 
 .PHONY: vet
 vet:
@@ -35,8 +34,8 @@ lint:
 	@echo "Linting"
 	@golint -set_exit_status $$(go list ./... | \grep -v 'vendor')
 
-.PHONY: validate
-validate: vet lint
+.PHONY: ci
+ci: bin/$(NAME) test vet lint
 
 .PHONY: vendor
 vendor:
@@ -45,9 +44,6 @@ vendor:
 vendor-build:
 	@echo "Building bin/$(NAME) using vendor libraries"
 	@go build -mod vendor -o bin/$(NAME) $(PGM_PATH)
-
-lint-travis:
-	@travis lint .travis.yml
 
 test-goreleaser:
 	@echo "Testing goreleaser"
