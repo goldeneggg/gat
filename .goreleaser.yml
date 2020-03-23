@@ -22,12 +22,7 @@ builds:
       goarch: 386
 
 archives:
-  # replacements:
-  #   darwin: Darwin
-  #   linux: Linux
-  #   windows: Windows
-  #   386: i386
-  #   amd64: x86_64
+-
   format_overrides:
     - goos: windows
       format: zip
@@ -46,6 +41,7 @@ changelog:
     - '^test:'
 
 brews:
+-
   github:
     owner: goldeneggg
     name: homebrew-tap
@@ -59,6 +55,7 @@ brews:
     system '#{bin}/gat -v'
 
 nfpms:
+-
   license: MIT
   maintainer: Fuminori Sakamoto
   homepage: https://github.com/goldeneggg/gat
