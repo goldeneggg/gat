@@ -21,7 +21,7 @@ builds:
     - goos: darwin
       goarch: 386
 
-archive:
+archives:
   # replacements:
   #   darwin: Darwin
   #   linux: Linux
@@ -45,7 +45,7 @@ changelog:
     - '^docs:'
     - '^test:'
 
-brew:
+brews:
   github:
     owner: goldeneggg
     name: homebrew-tap
@@ -58,7 +58,7 @@ brew:
   test: |
     system '#{bin}/gat -v'
 
-nfpm:
+nfpms:
   license: MIT
   maintainer: Fuminori Sakamoto
   homepage: https://github.com/goldeneggg/gat
