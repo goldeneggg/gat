@@ -83,5 +83,3 @@ jobs:
       with:
         version: latest
         args: release --snapshot --skip-publish --rm-dist --debug
-      env:
-        GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
